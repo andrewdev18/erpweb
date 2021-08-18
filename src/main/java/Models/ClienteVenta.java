@@ -20,10 +20,12 @@ public class ClienteVenta implements Serializable {
     public ClienteVenta(){
         
     }
+    /* Roberto es el PRO */
 
     public int getIdCliente() {
         return idCliente;
     }
+    
 
     public String getNombre() {
         return nombre;
