@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+        <ui:composition template="./../Plantilla/Plantilla.xhtml">
+
+            <ui:define name="content">
+                <h:form >
+                    <growl id="msg" />
+
+                    <div style="font-weight: bold; background-color: #036fab; 
+                         color: white; text-align: center; height: 25px;">
+                        <h2>Nueva Venta</h2>
+                    </div>
+                    <br/>
+                    <div>
+                        <p:panel header="Cliente" >
+                            <h:panelGrid columns="4" width="50%" >
+                                <p:outputLabel value="Identificación: "/>
+                                <p:inputText id="IdCliente" value="" />
+                                <p:outputLabel value="Nombre: "/>
+                                <p:inputText id="NombreCliente" value="" disabled="true" />
+                                <p:button value="Buscar" />
+                            </h:panelGrid>
+                        </p:panel>
+
+                        <p:panel header="Búsqueda de productos" style="widht: 45%; position: relative" >
+                            <h:panelGrid columns="3">
+                                <p:outputLabel value="Codigo: "/>
+                                <p:inputText id="ItemCodigo" value="000" />
+                                <p:commandButton value="Buscar" update="NombreProducto"/>
+                            </h:panelGrid>
+                            <p:divider/>
+                            <h:panelGrid columns="3" >
+                                <p:outputLabel value="Producto"/>
+                                <p:inputText id="NombreProducto" value="XXXXXXXXXXXX" disabled="true" />
+                                <div/>
+                                <p:outputLabel value="Precio: "/>
+                                <p:inputNumber id="priceTextBox" value="0.00" modifyValueOnWheel="false" disabled="true" />
+                                <div/>
+                                <p:outputLabel value="Cantidad: "/>
+                                <p:inputNumber value="0.00" modifyValueOnWheel="true" />
+                                <div/>
+                                <p:commandButton value="Agregar" />
+                            </h:panelGrid>
+                        </p:panel>
+                    </div>
+
+
+                    <div style="height: 30px" />
+
+                    <p:dataTable var="ListaItems">
+                        <f:facet name="header">
+                            Items
+                        </f:facet>
+                        <p:column headerText="Cod"/>
+                        <p:column headerText="Producto" />
+                        <p:column headerText="Precio Unitario"/>
+                        <p:column headerText="Descuento"/>
+                        <p:column headerText="Cantidad"/>
+                        <p:column headerText="Subtotal"/>
+
+                        <p:columnGroup type="footer">
+                            <p:row>
+                                <p:column colspan="5" style="text-align:right" footerText="Total:"/>
+                                <p:column style="text-align:left" footerText="0.00"/>
+                            </p:row>
+                        </p:columnGroup>
+                    </p:dataTable>
+                    <p:button value="Generar Factura" onclick="PF('NewSale').show()" style="float: right; margin: 20px 0px;" />
+                    <div style="margin-top:50px" />
+                </h:form>
+
+
+                <!--Datos de facturacion-->
+                <p:dialog header="Datos de facturacion" widgetVar="NewSale"
+                          height="100%" width="70%" showEffect="fade">
+                    <h:form>
+                        <p:panel header="Valor de venta" style="text-align: left; width: 100%; float: right">
+                            <h:panelGrid columns="2">
+                                <p:outputLabel value="Subtotal 12%"/>
+                                <p:inputText value="00.00" disabled="true"/>
+                                <p:outputLabel value="Subtotal 0%"/>
+                                <p:inputText value="00.00" disabled="true"/>
+                                <p:outputLabel value="Subtotal NO IVA"/>
+                                <p:inputText value="00.00" disabled="true"/>
+                                <p:outputLabel value="Subtotal EXCENTO IVA"/>
+                                <p:inputText value="00.00" disabled="true"/>
+                                <p:outputLabel value="Subtotal SIN IMPUESTOS"/>
+                                <p:inputText value="00.00" disabled="true"/>
+                                <p:outputLabel value="DESCUENTO"/>
+                                <p:inputText value="00.00" disabled="true"/>
+                                <p:outputLabel value="ICE"/>
+                                <p:inputText value="00.00" disabled="true"/>
+                                <p:outputLabel value="IVA 12%"/>
+                                <p:inputText value="00.00" disabled="true"/>
+                                <p:outputLabel value="TOTAL"/>
+                                <p:inputText value="00.00" disabled="true"/>
+                                <div/>
+                                <p:commandButton value="Efectuar Pago" type="button" onclick="PF('RealizarPago').show()"/>
+                            </h:panelGrid>
+                        </p:panel>
+                    </h:form >
+                </p:dialog>
+
+
+                <p:dialog header="Metodo de pago" widgetVar="RealizarPago"
+                          minHeight="600" width="70%" showEffect="fade">
+                    <h:form>
+                        <p:panel class="card">
+                            <h:panelGrid columns="2">
+                                <p:outputLabel value="Total a pagar: "/>
+                                <p:inputText value="00.00" disabled="true"/>
+                            </h:panelGrid>
+                        </p:panel>
+                        <p:accordionPanel>
+                            <p:tab title="Efectivo">
+                                <h:panelGrid columns="2">
+                                    <p:outputLabel value="Efectivo: "/>
+                                    <p:inputText value="00.00"/>                                    
+                                    <p:outputLabel value="Cambio: "/>
+                                    <p:inputText value="00.00"/>
+                                </h:panelGrid>
+                            </p:tab>
+                            <p:tab title="Tarjeta">
+                                <h:panelGrid columns="2">
+                                    <p:outputLabel value="Banco: "/>
+                                    <p:inputText value="XXXXXXXXXXXXXXXX"/>
+                                    <p:outputLabel value="Propietario: "/>
+                                    <p:inputText value="Juan Luis Quesada Luna"/>
+                                    <p:outputLabel value="Tipo de pago: "/>
+                                    <p:selectOneRadio id="console" unselectable="true">
+                                        <f:selectItem itemLabel="Corrriente" itemValue="Corriente"/>
+                                        <f:selectItem itemLabel="Diferido" itemValue="Corriente"/>
+                                    </p:selectOneRadio>
+                                </h:panelGrid>
+                            </p:tab>
+                        </p:accordionPanel>
+                        <p:commandButton value="Pagar" style="margin-top: 20px"/>
+                    </h:form>
+                </p:dialog>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

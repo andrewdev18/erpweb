@@ -1,0 +1,20 @@
+.ui-panelgrid.showcase-text-align-center .ui-grid-responsive .ui-panelgrid-cell {
+    text-align: center;
+}
+
+.customPanelGrid .ui-panelgrid-content {
+    align-items: center;
+}
+
+.ui-panel-titlebar{
+    height: 50px;
+}
+
+.panel-1-col-1{
+    width: 80%;
+}
+.panel-1-col-2{
+    width: 20%;
+    vertical-align: top;
+    text-align: right;
+}

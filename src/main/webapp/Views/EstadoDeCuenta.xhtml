@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../Plantilla/Plantilla.xhtml">
+
+            <ui:define name="content">
+                <div style="font-weight: bold; background-color: #036fab; 
+                     color: white; text-align: center; height: 25px;">
+                    <h2>ESTADO DE CUENTA</h2>
+                </div>
+                <br/>
+                <p:panel>
+                    <div class="ui-datatable ui-widget">
+                        <div class="card">
+                            <h:form id="form">
+                                <p:dataTable id="tblEstadoDeCuenta" var="varEstadoDeCuenta"
+                                 emptyMessage="No existen Registros." style="font-size: 12px;">
+
+                                    <p:column headerText="Nº">
+                                        <h:outputText value="" />
+
+                                    </p:column>
+                                    <p:column headerText="Cliente">
+                                        <h:outputText value="" />
+                                    </p:column>
+                                    <p:column headerText="Dirección">
+                                        <h:outputText value="" />
+                                    </p:column>
+                                    <p:column headerText="Teléfonos">
+                                        <h:outputText value="" />
+                                    </p:column>
+                                    <p:column headerText="Total">
+                                        <h:outputText value="" />
+                                    </p:column>
+                                    <p:column headerText="Corriente">
+                                        <h:outputText value="" />
+                                    </p:column>
+                                    <p:column headerText="Vencido">
+                                        <h:outputText value="" />
+                                    </p:column>
+                                    <p:column headerText="A -30d">
+                                        <h:outputText value="" />
+                                    </p:column>
+                                    <p:column headerText="A 30d">
+                                        <h:outputText value="" />
+                                    </p:column>
+                                    <p:column headerText="A 60d">
+                                        <h:outputText value="" />
+                                    </p:column>
+                                    <p:column headerText="A 90d">
+                                        <h:outputText value="" />
+                                    </p:column>
+                                    <p:column headerText="A +90d">
+                                        <h:outputText value="" />
+                                    </p:column>
+                                </p:dataTable>
+                            </h:form>
+                        </div>
+
+                        <h:form>
+                            <div style="padding: 10px; text-align: right;">  
+                                <p:commandButton id="btnExcel" 
+                                                 value="EXCEL" icon="pi pi-file-excel"
+                                                 style="background: green;"/>
+                                &nbsp;&nbsp;
+                                <p:commandButton id="btnPdf" 
+                                                 value="PDF" icon="pi pi-file-pdf"
+                                                 style="background: #E42E2E;">
+                                </p:commandButton>
+                            </div>
+                        </h:form>
+                    </div>
+                </p:panel>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

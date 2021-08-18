@@ -1,0 +1,182 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./../Plantilla/Plantilla.xhtml">
+
+            <ui:define name="content">
+                <div style="font-weight: bold; background-color: #036fab; 
+                     color: white; text-align: center; height: 25px;">
+                    <h2>REGISTRO NUEVO COBRO</h2>
+                </div>
+                <p:panel>
+                    <div class="ui-datatable ui-widget">
+                        <div style="height: 260px; font-size: 14px;">
+                            <div style="text-align: center; width: 250px; 
+                                 font-weight: bold; float: left;">
+                                <p>Tipo Fecha</p>
+                                <br/>
+                                <p>#Venta # Vencimiento *Todas</p>
+                                <br/>
+                                <p>Fecha Inicio: <label>[06/07/2021]</label>V</p>
+                                <br/>
+                                <p>Fecha Fin: <label>[06/07/2021]</label>V</p>
+                            </div>
+                            <div style=" text-align: center; width: 250px; height: 100px; 
+                                 font-weight: bold; float: left; padding-left: 20px;">
+                                <p>Identificación: <label>[##########]</label></p>
+                                <br/>
+                                <p>Factura N°: <label>[##########]</label></p>
+                                <br/>
+                                <p>Cliente: <label>[]</label></p>
+                                <br/>
+                                <p>Proveedor: <label>[]</label></p>
+                            </div>
+
+                            <div style="text-align: center; width: 200px; height: 100px; font-weight: bold; float: left;">
+                                <p>Crédito:</p> 
+                                <p><label>[0.00]</label></p> <br/>
+
+                                <p>Cheques Pendientes:</p> 
+                                <p><label>[0.00]</label></p>
+                            </div>
+
+                            <div style="text-align: center; width: 200px; height: 100px; font-weight: bold; float: left;">
+                                <p>Total de Deudas:</p> 
+                                <p><label>[0.00]</label></p> 
+                                <br/>
+                                <p>Saldos a Favor:</p> 
+                                <p><label>[0.00]</label></p> 
+                            </div>
+
+                            <div style="text-align: center; height: 100px; font-weight: bold; ">
+                                <br/>
+                                <p>Total OP Convertida:</p> 
+                                <p><label>[0.00]</label></p>
+                            </div>
+                            <br/><br/><br/>
+                            <div class="ui-grid-row">
+                                <div style="text-align: center; height: 100px; 
+                                     font-weight: bold; float: left; padding-left: 70px;">
+                                    <p>Vendedor: <label>[===================]</label>V</p> 
+                                </div>
+
+                                <div style="text-align: center; height: 100px; 
+                                     font-weight: bold; float: left; padding-left: 100px;">
+                                    <p>Cobrador: <label>[===================]</label>V</p> 
+                                </div>
+
+                                <div style="text-align: center; height: 100px; 
+                                     font-weight: bold; float: left; padding-left: 100px;">
+
+                                    <p>Fecha: <label>[===================]</label>V</p> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <h:form id="form">
+                                <p:dataTable id="tblRegistroCobro" var="varRegistroCobro"
+                                 emptyMessage="No existen Registros." style="font-size: 12px;">
+                                    <div style="text-align: center;">
+                                        <p:column headerText="Documento">
+                                            <h:outputText value="1" />
+                                        </p:column>
+                                        <p:column headerText="N° Fact">
+                                            <h:outputText value="" />
+                                        </p:column>
+                                        <p:column headerText="Fecha">
+                                            <h:outputText value="" />
+                                        </p:column>
+                                        <p:column headerText="$ Monto">
+                                            <h:outputText value="" />
+                                        </p:column>
+                                        <p:column headerText="$ Saldo">
+                                            <h:outputText value="" />
+                                        </p:column>
+                                        <p:column headerText="Elegir">
+                                            <h:outputText value="" />
+                                        </p:column>
+                                        <p:column headerText="$ Valor">
+                                            <h:outputText value="" />
+                                        </p:column>
+                                        <p:column headerText="Tipo Pago">
+                                            <h:outputText value="" />
+                                        </p:column>
+                                        <p:column headerText="Descripción del pago">
+                                            <h:outputText value="" />
+                                        </p:column>
+                                        <p:column headerText="Fecha">
+                                            <h:outputText value="" />
+                                        </p:column>
+                                        <p:column headerText="Vendedor">
+                                            <h:outputText value="" />
+                                        </p:column>
+                                        <p:column headerText="Observación">
+                                            <h:outputText value="" />
+                                        </p:column>
+                                    </div>
+                                </p:dataTable>
+                            </h:form>
+                        </div>
+                        <br/>
+                        <div class="card">
+                            <h:form id="form2">
+                                <p:dataTable style="font-size: 12px;">
+                                    <div style="text-align: center;">  
+                                        <p:column headerText="Formas de Pago">
+                                            <h:outputText value="1" />
+
+                                        </p:column>
+                                        <p:column headerText="$ Pago">
+                                            <h:outputText value="" />
+                                            <h:inputText value="Hola"/>
+                                        </p:column>
+                                        <p:column headerText="Fecha">
+                                            <h:outputText value="" />
+                                        </p:column>
+                                        <p:column headerText="Banco">
+                                            <h:outputText value="" />
+                                        </p:column>
+                                        <p:column headerText="Cuenta">
+                                            <h:outputText value="" />
+                                        </p:column>
+                                        <p:column headerText="Cheque / N° Comprobante">
+                                            <h:outputText value="" />
+                                        </p:column>
+                                        <p:column headerText="Secuencia">
+                                            <h:outputText value="" />
+                                        </p:column>
+                                        <p:column headerText="Autorización">
+                                            <h:outputText value="" />
+                                        </p:column>
+                                        <p:column headerText="#Cheques">
+                                            <h:outputText value="" />
+                                        </p:column>
+                                    </div>
+                                </p:dataTable>
+                            </h:form>
+                        </div>
+
+                        <div style="margin-top:15px;text-align: center;" class="father">
+
+                            <p:button icon="pi pi-pencil" value="NUEVO" styleClass=" ui-button-primary " style="margin:.3rem"/>
+                            <p:button icon="pi pi-save " value="GUARDAR" styleClass=" ui-button-success " style="margin:.3rem"/>
+                            <p:button icon="pi pi-sign-out " value="Salir" styleClass=" ui-button-warning " style="margin:.3rem"/>
+                            <p:button icon="pi pi-times btnMargin" value="Anular" styleClass="ui-button-danger " style="margin:.3rem" />
+                            <p:button icon="pi pi-exclamation-triangle " value="Reversar Pago" styleClass=" ui-button-danger" style="margin:.3rem" />
+                            <p:button icon="pi pi-money-bill btnMargin" value="Cuentas Incobrables" styleClass=" ui-button-secondary " style="margin:.3rem" />
+                            <p:button icon="pi pi-print " value="Cuotas" styleClass=" ui-button-help ui-button" style="margin:.3rem"/>
+                        </div>
+                    </div> 
+                </p:panel>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

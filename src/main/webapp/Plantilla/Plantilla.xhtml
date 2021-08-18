@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Ventas</title>
+        <h:outputStylesheet name="css/main.css"/>
+        <h:outputStylesheet name="css/cssLayout.css" />
+        <h:outputStylesheet name="css/default.css"/>
+        <h:outputStylesheet name="css/panelheaderpf.css"/>
+        
+        <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' />
+    </h:head>
+
+    <h:body>
+
+        <ui:insert name="top">
+            <div class="navbar">
+                <a href="/Modulo_Cuenta_Por_Cobrar/">
+                    <h:graphicImage name="imag/erpLogo.png"  height="60px" style="margin-right: 10px"/>
+                </a>
+                <h2>ERP CONTABLE</h2>
+            </div>
+        </ui:insert>
+
+        <div>
+            <div id="left">
+                <ui:insert name="left"></ui:insert>
+                <div>
+                    <ui:insert name="left"> 
+                        <h:form>
+                            <p:growl>
+                                <p:autoUpdate/>
+                            </p:growl>
+                            <p:panelMenu style="width:260px" >
+                                <p:submenu label ="Ventas" expanded="true">
+                                    <p:submenu label="Ventas" icon="pi pi-dollar">
+                                        <p:menuitem value="Nueva Venta"
+                                                    outcome="/Views/nuevaVenta.xhtml"/>
+                                        <p:menuitem value="Listado Ventas"
+                                                    outcome="/Views/ListadoCobros.xhtml"/>
+                                    </p:submenu>
+                                    
+                                    <p:submenu label="Proformas" icon="pi pi-dollar">
+                                        <p:menuitem value="Nueva Proforma"
+                                                    outcome="/Views/nuevaProforma.xhtml"/>
+                                        <p:menuitem value="Listado Proformas"
+                                                    outcome="/Views/ListadoCobros.xhtml"/>
+                                    </p:submenu>
+
+                                    <p:submenu label="Reportes" icon="pi pi-book">
+                                        <p:menuitem value="Listado de Clientes con/sin deuda"/>
+                                        <p:menuitem value="Pendientes de Cobro"/>
+                                        <p:menuitem value="Estado de Cuenta" 
+                                                    outcome="/Views/EstadoDeCuenta.xhtml"/>
+                                        <p:menuitem value="Facturas Pendientes" 
+                                                    outcome="/Views/FacturasPendientes.xhtml"/>
+                                        <p:menuitem value="Documentos de Cliente"/>
+                                        <p:menuitem value="Cartera x Edades de Vencimiento" 
+                                                    outcome="/Views/CarteraxEdadesDeVencimiento.xhtml"/>
+                                    </p:submenu>
+                                </p:submenu>
+                                
+                                <p:submenu label="Información Tributaria" expanded="true">
+                                    <p:menuitem value="Generar ATS" />
+                                    <p:menuitem value="Declaración IVA" />
+                                    <p:menuitem value="Declaración RENTA" />
+                                </p:submenu>
+                            </p:panelMenu>
+                        </h:form>
+                    </ui:insert>
+                </div>
+            </div>
+            <div id="content" class="left_content">
+                <ui:insert name="content">
+                    <div class="containerWelcome">
+                        <h:graphicImage name="imag/erpLogo.png"  height="100px" />
+                        <h2>Bienvenido a ERP Contable</h2>
+                        <p>Descripción del sistema</p>
+                    </div>
+                </ui:insert>
+            </div>
+        </div>
+
+
+    </h:body>
+
+</html>
