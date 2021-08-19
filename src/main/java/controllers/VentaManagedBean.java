@@ -16,7 +16,7 @@ import javax.inject.Named;
 
 
 @Named(value="VentaMB")
-@SessionScoped
+@RequestScoped
 public class VentaManagedBean implements Serializable{
     
     private ClienteVenta cliente;
