@@ -34,15 +34,15 @@
                             <h:panelGrid columns="3">
                                 <p:outputLabel value="Codigo: "/>
                                 <p:inputText id="ItemCodigo" value="#{productoManagedBean.codigoproducto}" />
-                                <p:commandButton value="Buscar" ajax="false" actionListener="" />
+                                <p:commandButton value="Buscar" ajax="false" actionListener="#{productoManagedBean.obtenerProducto()}" update="Detalleproducto" />
                             </h:panelGrid>
                             <p:divider/>
-                            <h:panelGrid columns="3" >
+                            <h:panelGrid columns="3" id="Detalleproducto" >
                                 <p:outputLabel value="Producto"/>
-                                <p:inputText id="NombreProducto" value="" disabled="true" />
+                                <p:inputText id="NombreProducto" value="#{productoManagedBean.nombreProducto}" disabled="true" />
                                 <div/>
                                 <p:outputLabel value="Precio: "/>
-                                <p:inputNumber id="priceTextBox" value="0.00" modifyValueOnWheel="false" disabled="true" />
+                                <p:inputNumber id="priceTextBox" value="#{productoManagedBean.precio}" modifyValueOnWheel="false" disabled="true" />
                                 <div/>
                                 <p:outputLabel value="Cantidad: "/>
                                 <p:inputNumber value="0.00" modifyValueOnWheel="true" />
