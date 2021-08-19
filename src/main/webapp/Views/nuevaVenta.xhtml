@@ -10,7 +10,7 @@
         <ui:composition template="./../Plantilla/Plantilla.xhtml">
 
             <ui:define name="content">
-                <h:form >
+                <h:form id="ventaForm">
                     <growl id="msg" />
 
                     <div style="font-weight: bold; background-color: #036fab; 
@@ -25,7 +25,7 @@
                                 <p:inputText id="IdNumCliente" value="#{VentaMB.clienteIdNum}" />
                                 <p:outputLabel value="Nombre: "/>
                                 <p:inputText id="NombreCliente" value="#{VentaMB.clienteNombre}" disabled="true" />
-                                <p:commandButton actionListener="#{VentaMB.BuscarClienteVenta}" value="Buscar" update="NombreCliente" />
+                                <p:commandButton actionListener="#{VentaMB.BuscarClienteVenta}" value="Buscar" update="ventaForm" />
                             </h:panelGrid>
                         </p:panel>
 
