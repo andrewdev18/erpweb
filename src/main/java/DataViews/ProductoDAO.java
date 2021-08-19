@@ -43,7 +43,7 @@ public class ProductoDAO {
         ResultSet rs;
         try {
             con.abrirConexion();
-            rs = con.ejecutarConsulta("Select * from buscarproductocodigo('" + id + "')");
+            rs = con.ejecutarConsulta("Select * from buscarproductocodigo(" + id + ")");
             con.cerrarConexion();
             if (rs.next()) {
                 product.setCodigo(rs.getInt(1));

@@ -17,21 +17,56 @@ import javax.inject.Named;
 @Named(value = "productoManagedBean")
 @ViewScoped
 public class ProductoManagedBean implements Serializable{
-    int codigoproducto=1001; 
+    String codigoproducto;
+    String nombreProducto;
+    float precio;
+    int cantidad;
+
+    public ProductoDAO getProductdao() {
+        return productdao;
+    }
+
+    public void setProductdao(ProductoDAO productdao) {
+        this.productdao = productdao;
+    }
+
+    public String getNombreProducto() {
+        return nombreProducto;
+    }
+
+    public void setNombreProducto(String nombreProducto) {
+        this.nombreProducto = nombreProducto;
+    }
+
+    public float getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(float precio) {
+        this.precio = precio;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
     ProductoDAO productdao;
     Producto product;
-    List<Producto> listaproforma;
+    List<Producto> listaproforma = new ArrayList();
     public ProductoManagedBean() {
         productdao= new ProductoDAO();
         product=new Producto();
         
     }
 
-    public int getCodigoproducto() {
+    public String getCodigoproducto() {
         return codigoproducto;
     }
 
-    public void setCodigoproducto(int codigoproducto) {
+    public void setCodigoproducto(String codigoproducto) {
         this.codigoproducto = codigoproducto;
     }
 
@@ -44,13 +79,17 @@ public class ProductoManagedBean implements Serializable{
     }
     
     public void obtenerProducto(){
-//        listaproforma = new ArrayList();
-//        productdao = new ProductoDAO(product);
-//        Producto pro = productdao.ObtenerProducto(codigoproducto);
-//        System.out.print(product.getCodigo());
-//        product = pro;
-//        System.out.print("Si se ejecuta ");
-//        System.out.print(pro.getProducto());
+        int codigo = Integer.parseInt(this.codigoproducto);
+        product = productdao.ObtenerProducto(codigo);
+        System.out.print("No hay errores");
+        if(this.product!=null){
+            this.nombreProducto=this.product.getProducto();
+            this.precio=this.product.getPrecio_unitario();
+            System.out.print("ProductoObtenido");
+        }
+        else{
+            System.err.print("Codigo de producto inexistente");
+        }
     }
     
 }
