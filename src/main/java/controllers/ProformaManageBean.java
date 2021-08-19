@@ -9,7 +9,7 @@ import javax.annotation.ManagedBean;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
-@Named(value="VentaMB")
+@Named(value="ProformaMB")
 @RequestScoped
 
 public class ProformaManageBean {
