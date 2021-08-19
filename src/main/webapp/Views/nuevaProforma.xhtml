@@ -11,7 +11,71 @@
         <ui:composition template="./../Plantilla/Plantilla.xhtml">
 
             <ui:define name="content">
-                Content
+                <h:form >
+                    <growl id="msg" />
+
+                    <div style="font-weight: bold; background-color: #036fab; 
+                         color: white; text-align: center; height: 25px;">
+                        <h2>Nueva Proforma</h2>
+                    </div>
+                    <br/>
+                    <div>
+                        <p:panel header="Cliente" >
+                            <h:panelGrid columns="4" width="50%" >
+                                <p:outputLabel value="Identificación: "/>
+                                <p:inputText id="IdCliente" value="" />
+                                <p:outputLabel value="Nombre: "/>
+                                <p:inputText id="NombreCliente" value="" disabled="true" />
+                                <p:button value="Buscar" />
+                            </h:panelGrid>
+                        </p:panel>
+
+                        <p:panel header="Búsqueda de productos" style="widht: 45%; position: relative" >
+                            <h:panelGrid columns="3">
+                                <p:outputLabel value="Codigo: "/>
+                                <p:inputText id="ItemCodigo" value="000" />
+                                <p:commandButton value="Buscar" update="NombreProducto"/>
+                            </h:panelGrid>
+                            <p:divider/>
+                            <h:panelGrid columns="3" >
+                                <p:outputLabel value="Producto"/>
+                                <p:inputText id="NombreProducto" value="XXXXXXXXXXXX" disabled="true" />
+                                <div/>
+                                <p:outputLabel value="Precio: "/>
+                                <p:inputNumber id="priceTextBox" value="0.00" modifyValueOnWheel="false" disabled="true" />
+                                <div/>
+                                <p:outputLabel value="Cantidad: "/>
+                                <p:inputNumber value="0.00" modifyValueOnWheel="true" />
+                                <div/>
+                                <p:commandButton value="Agregar" />
+                            </h:panelGrid>
+                        </p:panel>
+                    </div>
+
+
+                    <div style="height: 30px" />
+
+                    <p:dataTable var="ListaItems">
+                        <f:facet name="header">
+                            Items
+                        </f:facet>
+                        <p:column headerText="Cod"/>
+                        <p:column headerText="Producto" />
+                        <p:column headerText="Precio Unitario"/>
+                        <p:column headerText="Descuento"/>
+                        <p:column headerText="Cantidad"/>
+                        <p:column headerText="Subtotal"/>
+
+                        <p:columnGroup type="footer">
+                            <p:row>
+                                <p:column colspan="5" style="text-align:right" footerText="Total:"/>
+                                <p:column style="text-align:left" footerText="0.00"/>
+                            </p:row>
+                        </p:columnGroup>
+                    </p:dataTable>
+                    <p:button value="Ingresar Proforma" style="float: right; margin: 20px 0px;" />
+                    <div style="margin-top:50px" />
+                </h:form>
             </ui:define>
 
         </ui:composition>
