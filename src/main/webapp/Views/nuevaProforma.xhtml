@@ -33,13 +33,13 @@
                         <p:panel header="Búsqueda de productos" style="widht: 45%; position: relative" >
                             <h:panelGrid columns="3">
                                 <p:outputLabel value="Codigo: "/>
-                                <p:inputText id="ItemCodigo" value="000" />
-                                <p:commandButton value="Buscar" update="NombreProducto"/>
+                                <p:inputText id="ItemCodigo" value="#{productoManagedBean.codigoproducto}" />
+                                <p:commandButton value="Buscar" ajax="false" actionListener="" />
                             </h:panelGrid>
                             <p:divider/>
                             <h:panelGrid columns="3" >
                                 <p:outputLabel value="Producto"/>
-                                <p:inputText id="NombreProducto" value="XXXXXXXXXXXX" disabled="true" />
+                                <p:inputText id="NombreProducto" value="" disabled="true" />
                                 <div/>
                                 <p:outputLabel value="Precio: "/>
                                 <p:inputNumber id="priceTextBox" value="0.00" modifyValueOnWheel="false" disabled="true" />

@@ -20,7 +20,7 @@ public class Conexion implements Serializable{
 
     private String url = "jdbc:postgresql://localhost:5432/erp_global";
     private String usuario = "postgres";
-    private String clave = "12345";
+    private String clave = "123456";
     private String classForName = "org.postgresql.Driver";
     
      public Conexion() {
