@@ -22,17 +22,17 @@
                         <p:panel header="Cliente" >
                             <h:panelGrid columns="4" width="50%" >
                                 <p:outputLabel value="Identificación: "/>
-                                <p:inputText id="IdNumCliente" value="#{VentaMB.cliente.identificacion}" />
+                                <p:inputText id="IdNumCliente" value="#{VentaMB.clienteIdNum}" />
                                 <p:outputLabel value="Nombre: "/>
-                                <p:inputText id="NombreCliente" value="#{VentaMB.cliente.nombre}" disabled="true" />
-                                <p:commandButton actionListener="#{VentaMB.BuscarClienteVenta}" value="Buscar" />
+                                <p:inputText id="NombreCliente" value="#{VentaMB.clienteNombre}" disabled="true" />
+                                <p:commandButton actionListener="#{VentaMB.BuscarClienteVenta}" value="Buscar" update="NombreCliente" />
                             </h:panelGrid>
                         </p:panel>
 
                         <p:panel header="Búsqueda de productos" style="widht: 45%; position: relative" >
                             <h:panelGrid columns="3">
                                 <p:outputLabel value="Codigo: "/>
-                                <p:inputText id="ItemCodigo" value="000" />
+                                <p:inputText id="ItemCodigo" value="0" />
                                 <p:commandButton value="Buscar" update="NombreProducto"/>
                             </h:panelGrid>
                             <p:divider/>

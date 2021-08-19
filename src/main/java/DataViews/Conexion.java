@@ -20,7 +20,7 @@ public class Conexion implements Serializable{
 
     private String url = "jdbc:postgresql://localhost:5432/erpglobal";
     private String usuario = "postgres";
-    private String clave = "12345";
+    private String clave = "123456";
     private String classForName = "org.postgresql.Driver";
     
      public Conexion() {
@@ -86,6 +86,12 @@ public class Conexion implements Serializable{
             System.out.println(mensaje);
             cerrarConexion();
         }
+        
+        if(lector != null)
+            System.out.print("Si hubo consulta");
+        else
+            System.out.print("No hubo consulta");
+        
         return lector;
     }
     

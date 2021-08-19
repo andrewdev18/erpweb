@@ -21,6 +21,8 @@ public class VentaManagedBean implements Serializable{
     
     private ClienteVenta cliente;
     private ClienteVentaDao clienteDAO;
+    private String clienteIdNum;
+    private String clienteNombre;
 
     
     //Constructor
@@ -31,9 +33,15 @@ public class VentaManagedBean implements Serializable{
     }
        
     public void BuscarClienteVenta(){
-        this.cliente = clienteDAO.BuscarCliente(this.cliente.getIdentificacion());
+        this.cliente = clienteDAO.BuscarCliente(this.clienteIdNum);
+        if(this.cliente != null)
+            this.clienteNombre = this.cliente.getNombre();
+        else
+            System.out.print("No hay cliente");
+        
+        
         if(this.cliente.getNombre() != null)
-            System.out.print("Cliente: " + cliente.getNombre());
+            System.out.print("Cliente: " + clienteNombre);
         else
             System.out.print("Sin cliente");
     }
@@ -49,6 +57,22 @@ public class VentaManagedBean implements Serializable{
     
     public ClienteVentaDao getClienteDAO() {
         return clienteDAO;
+    }
+
+    public String getClienteIdNum() {
+        return clienteIdNum;
+    }
+
+    public void setClienteIdNum(String clienteIdNum) {
+        this.clienteIdNum = clienteIdNum;
+    }
+
+    public String getClienteNombre() {
+        return clienteNombre;
+    }
+
+    public void setClienteNombre(String clienteNombre) {
+        this.clienteNombre = clienteNombre;
     }
 
     
