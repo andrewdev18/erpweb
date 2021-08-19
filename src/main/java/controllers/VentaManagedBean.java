@@ -13,15 +13,14 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
-/**
- *
- * @author Andres
- */
+
 @Named(value="VentaMB")
 @RequestScoped
 public class VentaManagedBean implements Serializable{
     private ClienteVenta cliente;
     private ClienteVentaDao clienteDAO;
+    private String nombreCliente;
+    private String idNumCliente;
     
     @PostConstruct
     public void VentaManagedBean(){
@@ -29,7 +28,36 @@ public class VentaManagedBean implements Serializable{
         clienteDAO = new ClienteVentaDao();
     }
        
-    public void BuscarCliente(String idnum){
-        this.cliente = clienteDAO.BuscarCliente(idnum);
+    public void BuscarCliente(){
+        this.cliente = clienteDAO.BuscarCliente(this.idNumCliente);
+        this.nombreCliente = this.cliente.getNombre();
     }
+
+    public ClienteVenta getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(ClienteVenta cliente) {
+        this.cliente = cliente;
+    }
+
+    public String getNombreCliente() {
+        return nombreCliente;
+    }
+
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
+    }
+
+    public String getIdNumCliente() {
+        return idNumCliente;
+    }
+
+    public void setIdNumCliente(String idNumCliente) {
+        this.idNumCliente = idNumCliente;
+        this.cliente.setIdentificacion(idNumCliente);
+    }
+    
+    
+    
 }
