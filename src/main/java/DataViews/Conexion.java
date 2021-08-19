@@ -18,7 +18,7 @@ public class Conexion implements Serializable{
     private String mensaje;
     private FacesMessage.Severity tipoMensaje;
 
-    private String url = "jdbc:postgresql://localhost:5432/erp_global";
+    private String url = "jdbc:postgresql://localhost:5432/erpglobal";
     private String usuario = "postgres";
     private String clave = "12345";
     private String classForName = "org.postgresql.Driver";

@@ -22,10 +22,10 @@
                         <p:panel header="Cliente" >
                             <h:panelGrid columns="4" width="50%" >
                                 <p:outputLabel value="Identificación: "/>
-                                <p:inputText id="IdNumCliente" value="#{VentaMB.idNumCliente}" />
+                                <p:inputText id="IdNumCliente" value="#{VentaMB.cliente.identificacion}" />
                                 <p:outputLabel value="Nombre: "/>
-                                <p:inputText id="NombreCliente" value="#{VentaMB.nombreCliente}" disabled="true" />
-                                <p:commandButton actionListener="#{VentaMB.buscarCliente}" value="Buscar" />
+                                <p:inputText id="NombreCliente" value="#{VentaMB.cliente.nombre}" disabled="true" />
+                                <p:commandButton actionListener="#{VentaMB.BuscarClienteVenta}" value="Buscar" />
                             </h:panelGrid>
                         </p:panel>
 
