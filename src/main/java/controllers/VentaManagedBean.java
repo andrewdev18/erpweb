@@ -11,26 +11,31 @@ import java.io.Serializable;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 
 @Named(value="VentaMB")
-@RequestScoped
+@SessionScoped
 public class VentaManagedBean implements Serializable{
+    
     private ClienteVenta cliente;
     private ClienteVentaDao clienteDAO;
-    private String nombreCliente;
-    private String idNumCliente;
+
     
-    @PostConstruct
-    public void VentaManagedBean(){
+    //Constructor
+    public VentaManagedBean(){
         cliente = new ClienteVenta();
         clienteDAO = new ClienteVentaDao();
+        System.out.println("Started");
     }
        
-    public void BuscarCliente(){
-        this.cliente = clienteDAO.BuscarCliente(this.idNumCliente);
-        this.nombreCliente = this.cliente.getNombre();
+    public void BuscarClienteVenta(){
+        this.cliente = clienteDAO.BuscarCliente(this.cliente.getIdentificacion());
+        if(this.cliente.getNombre() != null)
+            System.out.print("Cliente: " + cliente.getNombre());
+        else
+            System.out.print("Sin cliente");
     }
 
     public ClienteVenta getCliente() {
@@ -40,24 +45,11 @@ public class VentaManagedBean implements Serializable{
     public void setCliente(ClienteVenta cliente) {
         this.cliente = cliente;
     }
-
-    public String getNombreCliente() {
-        return nombreCliente;
-    }
-
-    public void setNombreCliente(String nombreCliente) {
-        this.nombreCliente = nombreCliente;
-    }
-
-    public String getIdNumCliente() {
-        return idNumCliente;
-    }
-
-    public void setIdNumCliente(String idNumCliente) {
-        this.idNumCliente = idNumCliente;
-        this.cliente.setIdentificacion(idNumCliente);
-    }
+   
     
-    
+    public ClienteVentaDao getClienteDAO() {
+        return clienteDAO;
+    }
+
     
 }
