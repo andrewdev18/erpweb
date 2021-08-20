@@ -39,12 +39,20 @@ public class VentaManagedBean implements Serializable {
     private int codigoProducto;
     private String nombreProducto;
     private float precioProducto;
-    private double subtotalventa;
+    private double subTotalVenta;
 
     private DetalleVenta detalleVenta;
     private DetalleVentaDAO detalleDAO;
     private List<DetalleVenta> listaDetalle;
     private double cantidad;
+    
+    private double subtotal12;
+    private double subtotal0;
+    private double descuento;
+    private double ice;
+    private double iva;
+    private double total;
+    
 
     //Constructor
     public VentaManagedBean() {
@@ -55,8 +63,15 @@ public class VentaManagedBean implements Serializable {
         this.productoDao = new ProductoDAO();
         this.codigoProducto = 0;
         this.nombreProducto = "XXXXXXX";
-        this.subtotalventa=0;
-
+        this.subTotalVenta = 0;
+        
+        this.subtotal12 = 0;
+        this.subtotal0 = 0;
+        this.descuento = 0;
+        this.ice = 0;
+        this.iva = 0;
+        this.total = 0;
+        
         this.listaDetalle = new ArrayList<>();
         this.cantidad = 1;
     }
@@ -101,18 +116,30 @@ public class VentaManagedBean implements Serializable {
             detalle.setProducto(this.producto);
             detalle.setSubTotal(this.cantidad * this.precioProducto);
 
-            /*            
             BigDecimal controldecimal = new BigDecimal((this.cantidad * this.precioProducto)).setScale(2, RoundingMode.UP);
-            double tempSubTotal = controldecimal.doubleValue();                        
+            double tempSubTotal = controldecimal.doubleValue();
             detalle.setSubTotal(tempSubTotal);
-            this.subtotalventa=this.subtotalventa+controldecimal.doubleValue();
-            */
-            
+            this.subTotalVenta = this.subTotalVenta + controldecimal.doubleValue();
+
             this.listaDetalle.add(detalle);
             this.cantidad = 1;
             this.codigoProducto = 0;
             this.nombreProducto = "";
-            this.precioProducto = 0;
+            
+            
+            double ivaTemp = this.producto.getIva();
+            double iceTemp = this.producto.getIce();
+            
+            if(ivaTemp > 0)
+                this.subtotal12 += this.producto.getPrecioUnitario();
+            else
+                this.subtotal0 += this.producto.getPrecioUnitario();
+            
+            this.iva += ivaTemp;
+            this.ice += iceTemp;
+            
+            this.total = this.subtotal0 + this.subtotal12 + this.iva + this.ice;
+            
             this.producto = null;
         } else {
             System.out.println("No hay producto seleccionado");
@@ -220,12 +247,62 @@ public class VentaManagedBean implements Serializable {
         this.cantidad = cantidad;
     }
 
-    public double getSubtotalventa() {
-        return subtotalventa;
+    public double getSubTotalVenta() {
+        return subTotalVenta;
     }
 
-    public void setSubtotalventa(double subtotalventa) {
-        this.subtotalventa = subtotalventa;
+    public void setSubTotalVenta(double subTotalVenta) {
+        this.subTotalVenta = subTotalVenta;
+    }
+
+    public double getSubtotal12() {
+        return subtotal12;
+    }
+
+    public void setSubtotal12(double subtotal12) {
+        this.subtotal12 = subtotal12;
+    }
+
+    public double getSubtotal0() {
+        return subtotal0;
+    }
+
+    public void setSubtotal0(double subtotal0) {
+        this.subtotal0 = subtotal0;
+    }
+
+    public double getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(double descuento) {
+        this.descuento = descuento;
+    }
+
+    public double getIce() {
+        return ice;
+    }
+
+    public void setIce(double ice) {
+        this.ice = ice;
+    }
+
+    public double getIva() {
+        return iva;
+    }
+
+    public void setIva(double iva) {
+        this.iva = iva;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
     }
     
+    
+
 }

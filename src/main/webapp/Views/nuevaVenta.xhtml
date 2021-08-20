@@ -47,7 +47,7 @@
                                 <p:outputLabel value="Cantidad: "/>
                                 <p:inputNumber value="#{VentaMB.cantidad}" modifyValueOnWheel="true" />
                                 <div/>
-                                <p:commandButton value="Agregar" actionListener="#{VentaMB.AgregarProductoLista}" update="itemsTable busquedaProductoPanel" />
+                                <p:commandButton value="Agregar" actionListener="#{VentaMB.AgregarProductoLista}" update="itemsTable busquedaProductoPanel FactData" />
                             </h:panelGrid>
                         </p:panel>
                     </div>
@@ -94,7 +94,7 @@
                         <p:columnGroup type="footer">
                             <p:row>
                                 <p:column colspan="5" style="text-align:right" footerText="Total:"/>
-                                <p:column style="text-align:left" footerText="#{VentaMB.subtotalventa}"/>
+                                <p:column style="text-align:left" footerText="#{VentaMB.subTotalVenta}"/>
                             </p:row>
                         </p:columnGroup>
                     </p:dataTable>
@@ -104,29 +104,23 @@
 
 
                 <!--Datos de facturacion-->
-                <p:dialog header="Datos de facturacion" widgetVar="NewSale"
+                <p:dialog id="FactData" header="Datos de facturacion" widgetVar="NewSale"
                           height="100%" width="70%" showEffect="fade">
                     <h:form>
                         <p:panel header="Valor de venta" style="text-align: left; width: 100%; float: right">
                             <h:panelGrid columns="2">
                                 <p:outputLabel value="Subtotal 12%"/>
-                                <p:inputText value="00.00" disabled="true"/>
+                                <p:inputText value="#{VentaMB.subtotal12}" disabled="true"/>
                                 <p:outputLabel value="Subtotal 0%"/>
-                                <p:inputText value="00.00" disabled="true"/>
-                                <p:outputLabel value="Subtotal NO IVA"/>
-                                <p:inputText value="00.00" disabled="true"/>
-                                <p:outputLabel value="Subtotal EXCENTO IVA"/>
-                                <p:inputText value="00.00" disabled="true"/>
-                                <p:outputLabel value="Subtotal SIN IMPUESTOS"/>
-                                <p:inputText value="00.00" disabled="true"/>
+                                <p:inputText value="#{VentaMB.subtotal0}" disabled="true"/>
                                 <p:outputLabel value="DESCUENTO"/>
-                                <p:inputText value="00.00" disabled="true"/>
+                                <p:inputText value="#{VentaMB.descuento}" disabled="true"/>
                                 <p:outputLabel value="ICE"/>
-                                <p:inputText value="00.00" disabled="true"/>
+                                <p:inputText value="#{VentaMB.ice}" disabled="true"/>
                                 <p:outputLabel value="IVA 12%"/>
-                                <p:inputText value="00.00" disabled="true"/>
+                                <p:inputText value="#{VentaMB.iva}" disabled="true"/>
                                 <p:outputLabel value="TOTAL"/>
-                                <p:inputText value="00.00" disabled="true"/>
+                                <p:inputText value="#{VentaMB.total}" disabled="true"/>
                                 <div/>
                                 <p:commandButton value="Efectuar Pago" type="button" onclick="PF('RealizarPago').show()"/>
                             </h:panelGrid>
