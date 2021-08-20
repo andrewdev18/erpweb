@@ -14,6 +14,7 @@ import Models.Producto;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
@@ -87,7 +88,7 @@ public class VentaManagedBean implements Serializable {
 
     //Agregar producto a la lista de detalle
     public void AgregarProductoLista() {
-        if (this.producto != null) {
+        if (this.producto.getCodigo() > 0) {
             DetalleVenta detalle = new DetalleVenta();
             detalle.setCodprincipal(this.producto.getCodigo());
             detalle.setCantidad(this.cantidad);
@@ -95,16 +96,14 @@ public class VentaManagedBean implements Serializable {
             detalle.setPrecio(this.producto.getPrecioUnitario());
             detalle.setProducto(this.producto);
             
-            DecimalFormat df = new DecimalFormat();
-            df.setMaximumFractionDigits(2);
-            double tempSubTotal = (this.cantidad * this.precioProducto);
-                        
-            detalle.setSubTotal(tempSubTotal);
+            detalle.setSubTotal(this.cantidad * this.precioProducto);
             this.listaDetalle.add(detalle);
 
             this.cantidad = 1;
             this.codigoProducto = 0;
-            this.producto = new Producto();
+            this.nombreProducto = "";
+            this.precioProducto = 0;
+            this.producto = null;
         } else {
             System.out.println("No hay producto seleccionado");
         }
