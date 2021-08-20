@@ -65,8 +65,9 @@ public class VentaManagedBean implements Serializable{
     public void BuscarProducto(){
         this.nombreProducto = "";
         this.producto = this.productoDao.ObtenerProducto(this.codigoProducto);
+        this.nombreProducto = this.producto.getDescripcion();
         if(this.producto == null)
-            System.out.print("No existe el producto " + this.nombreProducto);
+            System.out.print("No existe el producto");
         else{
             System.out.print("Existe el producto" + this.nombreProducto);
             this.nombreProducto = this.producto.getDescripcion();
