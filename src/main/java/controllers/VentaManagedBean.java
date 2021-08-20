@@ -12,6 +12,7 @@ import Models.ClienteVenta;
 import Models.DetalleVenta;
 import Models.Producto;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.ManagedBean;
@@ -21,85 +22,94 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
-
-@Named(value="VentaMB")
+@Named(value = "VentaMB")
 @ViewScoped
-public class VentaManagedBean implements Serializable{
-    
+public class VentaManagedBean implements Serializable {
+
     private ClienteVenta cliente;
     private ClienteVentaDao clienteDAO;
     private String clienteIdNum;
     private String clienteNombre;
-    
+
     private ProductoDAO productoDao;
     private Producto producto;
     private int codigoProducto;
     private String nombreProducto;
     private float precioProducto;
-    
+
     private DetalleVenta detalleVenta;
     private DetalleVentaDAO detalleDAO;
     private List<DetalleVenta> listaDetalle;
     private double cantidad;
-    
+
     //Constructor
-    public VentaManagedBean(){
+    public VentaManagedBean() {
         this.cliente = new ClienteVenta();
         this.clienteDAO = new ClienteVentaDao();
-        
+
         this.producto = new Producto();
         this.productoDao = new ProductoDAO();
         this.codigoProducto = 0;
         this.nombreProducto = "XXXXXXX";
-        
+
         this.listaDetalle = new ArrayList<>();
-        this.cantidad = 0;
-    }
-       
-    //Buscar cliente
-    public void BuscarClienteVenta(){
-        this.cliente = clienteDAO.BuscarCliente(this.clienteIdNum);
-        if(this.cliente != null)
-            this.clienteNombre = this.cliente.getNombre();
-        else
-            System.out.print("No hay cliente");
-        
-        if(this.cliente.getNombre() != null)
-            System.out.print("Cliente: " + clienteNombre);
-        else
-            System.out.print("Sin cliente");
+        this.cantidad = 1;
     }
 
-    
+    //Buscar cliente
+    public void BuscarClienteVenta() {
+        this.cliente = clienteDAO.BuscarCliente(this.clienteIdNum);
+        if (this.cliente != null) {
+            this.clienteNombre = this.cliente.getNombre();
+        } else {
+            System.out.print("No hay cliente");
+        }
+
+        if (this.cliente.getNombre() != null) {
+            System.out.print("Cliente: " + clienteNombre);
+        } else {
+            System.out.print("Sin cliente");
+        }
+    }
+
     //Buscar Producto
-    public void BuscarProducto(){
+    public void BuscarProducto() {
         this.nombreProducto = "";
         this.producto = this.productoDao.ObtenerProducto(this.codigoProducto);
-        //this.nombreProducto = this.producto.getDescripcion();
-        if(this.producto == null)
+        if (this.producto == null) {
             System.out.print("Producto nulo");
-        else{
+        } else {
             System.out.print("Existe el producto" + this.nombreProducto);
             this.nombreProducto = this.producto.getDescripcion();
             this.precioProducto = this.producto.getPrecioUnitario();
         }
     }
-    
-    
+
     //Agregar producto a la lista de detalle
-    public void AgregarProductoLista(){
-        if(this.producto != null){
+    public void AgregarProductoLista() {
+        if (this.producto != null) {
             DetalleVenta detalle = new DetalleVenta();
-            detalle.setProducto(this.producto);
+            detalle.setCodprincipal(this.producto.getCodigo());
             detalle.setCantidad(this.cantidad);
-            detalle.setSubTotal(this.cantidad * this.precioProducto);
-            this.listaDetalle.add(detalleVenta);
-        }
-        else{
+            detalle.setDescuento(this.producto.getDescuento());
+            detalle.setPrecio(this.producto.getPrecioUnitario());
+            detalle.setProducto(this.producto);
+            
+            DecimalFormat df = new DecimalFormat();
+            df.setMaximumFractionDigits(2);
+            double tempSubTotal = (this.cantidad * this.precioProducto);
+                        
+            detalle.setSubTotal(tempSubTotal);
+            this.listaDetalle.add(detalle);
+
+            this.cantidad = 1;
+            this.codigoProducto = 0;
+            this.producto = new Producto();
+        } else {
             System.out.println("No hay producto seleccionado");
         }
     }
-    
+
     //--------------------Getter y Setter-------------------//
     public ClienteVenta getCliente() {
         return cliente;
@@ -108,8 +118,7 @@ public class VentaManagedBean implements Serializable{
     public void setCliente(ClienteVenta cliente) {
         this.cliente = cliente;
     }
-   
-    
+
     public ClienteVentaDao getClienteDAO() {
         return clienteDAO;
     }
