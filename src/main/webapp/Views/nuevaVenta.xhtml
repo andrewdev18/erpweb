@@ -44,9 +44,9 @@
                                 <p:inputNumber id="priceTextBox" value="#{VentaMB.precioProducto}" modifyValueOnWheel="false" disabled="true" />
                                 <div/>
                                 <p:outputLabel value="Cantidad: "/>
-                                <p:inputNumber value="0.00" modifyValueOnWheel="true" />
+                                <p:inputNumber value="#{VentaMB.cantidad}" modifyValueOnWheel="true" />
                                 <div/>
-                                <p:commandButton value="Agregar" />
+                                <p:commandButton value="Agregar" actionListener="#{VentaMB.AgregarProductoLista}" update="itemsTable" />
                             </h:panelGrid>
                         </p:panel>
                     </div>
@@ -54,16 +54,33 @@
 
                     <div style="height: 30px" />
 
-                    <p:dataTable var="ListaItems">
+                    <p:dataTable var="ListaItems" id="itemsTable" value="#{VentaMB.listaDetalle}" >
                         <f:facet name="header">
                             Items
                         </f:facet>
-                        <p:column headerText="Cod"/>
-                        <p:column headerText="Producto" />
-                        <p:column headerText="Precio Unitario"/>
-                        <p:column headerText="Descuento"/>
-                        <p:column headerText="Cantidad"/>
-                        <p:column headerText="Subtotal"/>
+                        <p:column headerText="Cod">
+                            <h:outputText value="#{ListaItems.producto.codigoAux}" />
+                        </p:column>
+                        
+                        <p:column headerText="Producto" >
+                            <h:outputText value="#{ListaItems.producto.descripcion}" />
+                        </p:column>
+                        
+                        <p:column headerText="Precio Unitario">
+                            <h:outputText value="#{ListaItems.producto.precioUnitario}" />
+                        </p:column>
+                        
+                        <p:column headerText="Descuento">
+                            <h:outputText value="#{ListaItems.producto.descuento}" />
+                        </p:column>
+                        
+                        <p:column headerText="Cantidad">
+                            <h:outputText value="#{ListaItems.cantidad}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Subtotal">
+                            <h:outputText value="#{ListaItems.subTotal}"/>
+                        </p:column>
 
                         <p:columnGroup type="footer">
                             <p:row>

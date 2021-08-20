@@ -6,10 +6,14 @@
 package controllers;
 
 import DataViews.ClienteVentaDao;
+import DataViews.DetalleVentaDAO;
 import DataViews.ProductoDAO;
 import Models.ClienteVenta;
+import Models.DetalleVenta;
 import Models.Producto;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -32,7 +36,11 @@ public class VentaManagedBean implements Serializable{
     private int codigoProducto;
     private String nombreProducto;
     private float precioProducto;
-
+    
+    private DetalleVenta detalleVenta;
+    private DetalleVentaDAO detalleDAO;
+    private List<DetalleVenta> listaDetalle;
+    private double cantidad;
     
     //Constructor
     public VentaManagedBean(){
@@ -44,6 +52,8 @@ public class VentaManagedBean implements Serializable{
         this.codigoProducto = 0;
         this.nombreProducto = "XXXXXXX";
         
+        this.listaDetalle = new ArrayList<>();
+        this.cantidad = 0;
     }
        
     //Buscar cliente
@@ -65,13 +75,28 @@ public class VentaManagedBean implements Serializable{
     public void BuscarProducto(){
         this.nombreProducto = "";
         this.producto = this.productoDao.ObtenerProducto(this.codigoProducto);
-        this.nombreProducto = this.producto.getDescripcion();
+        //this.nombreProducto = this.producto.getDescripcion();
         if(this.producto == null)
-            System.out.print("No existe el producto");
+            System.out.print("Producto nulo");
         else{
             System.out.print("Existe el producto" + this.nombreProducto);
             this.nombreProducto = this.producto.getDescripcion();
             this.precioProducto = this.producto.getPrecioUnitario();
+        }
+    }
+    
+    
+    //Agregar producto a la lista de detalle
+    public void AgregarProductoLista(){
+        if(this.producto != null){
+            DetalleVenta detalle = new DetalleVenta();
+            detalle.setProducto(this.producto);
+            detalle.setCantidad(this.cantidad);
+            detalle.setSubTotal(this.cantidad * this.precioProducto);
+            this.listaDetalle.add(detalleVenta);
+        }
+        else{
+            System.out.println("No hay producto seleccionado");
         }
     }
     
@@ -145,5 +170,35 @@ public class VentaManagedBean implements Serializable{
         this.codigoProducto = codigoProducto;
     }
 
-    
+    public DetalleVenta getDetalleVenta() {
+        return detalleVenta;
+    }
+
+    public void setDetalleVenta(DetalleVenta detalleVenta) {
+        this.detalleVenta = detalleVenta;
+    }
+
+    public DetalleVentaDAO getDetalleDAO() {
+        return detalleDAO;
+    }
+
+    public void setDetalleDAO(DetalleVentaDAO detalleDAO) {
+        this.detalleDAO = detalleDAO;
+    }
+
+    public List<DetalleVenta> getListaDetalle() {
+        return listaDetalle;
+    }
+
+    public void setListaDetalle(List<DetalleVenta> listaDetalle) {
+        this.listaDetalle = listaDetalle;
+    }
+
+    public double getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(double cantidad) {
+        this.cantidad = cantidad;
+    }
 }
