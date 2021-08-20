@@ -16,7 +16,7 @@ import javax.inject.Named;
 
 
 @Named(value="VentaMB")
-@SessionScoped
+@RequestScoped
 public class VentaManagedBean implements Serializable{
     
     private ClienteVenta cliente;
@@ -38,7 +38,6 @@ public class VentaManagedBean implements Serializable{
             this.clienteNombre = this.cliente.getNombre();
         else
             System.out.print("No hay cliente");
-        
         
         if(this.cliente.getNombre() != null)
             System.out.print("Cliente: " + clienteNombre);
