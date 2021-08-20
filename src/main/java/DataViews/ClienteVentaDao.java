@@ -59,6 +59,7 @@ public class ClienteVentaDao implements Serializable {
             if(con.isEstado())
                 con.cerrarConexion();
             con.cerrarConexion();
+            return null;
         }
     }
 }
