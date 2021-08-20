@@ -99,14 +99,15 @@ public class VentaManagedBean implements Serializable {
             detalle.setDescuento(this.producto.getDescuento());
             detalle.setPrecio(this.producto.getPrecioUnitario());
             detalle.setProducto(this.producto);
+            detalle.setSubTotal(this.cantidad * this.precioProducto);
 
             /*            
-            detalle.setSubTotal(this.cantidad * this.precioProducto);
             BigDecimal controldecimal = new BigDecimal((this.cantidad * this.precioProducto)).setScale(2, RoundingMode.UP);
             double tempSubTotal = controldecimal.doubleValue();                        
             detalle.setSubTotal(tempSubTotal);
             this.subtotalventa=this.subtotalventa+controldecimal.doubleValue();
             */
+            
             this.listaDetalle.add(detalle);
             this.cantidad = 1;
             this.codigoProducto = 0;
