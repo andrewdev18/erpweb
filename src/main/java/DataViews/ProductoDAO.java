@@ -65,7 +65,8 @@ public class ProductoDAO {
                 product.setDescuento(rs.getFloat(10));
             }
         } catch (Exception e) {
-
+            if(con.isEstado())
+                con.cerrarConexion();
         }
         return product;
     }

@@ -34,7 +34,7 @@
                             <h:panelGrid columns="3">
                                 <p:outputLabel value="Codigo: "/>
                                 <p:inputText id="ItemCodigo" value="#{productoManagedBean.codigoproducto}" />
-                                <p:commandButton value="Buscar" ajax="false" actionListener="#{productoManagedBean.obtenerProducto()}" update="Detalleproducto" />
+                                <p:commandButton value="Buscar" ajax="false" actionListener="#{productoManagedBean.obtenerProducto}" update="Detalleproducto" />
                             </h:panelGrid>
                             <p:divider/>
                             <h:panelGrid columns="3" id="Detalleproducto" >
