@@ -39,7 +39,6 @@ public class VentaManagedBean implements Serializable{
         else
             System.out.print("No hay cliente");
         
-        
         if(this.cliente.getNombre() != null)
             System.out.print("Cliente: " + clienteNombre);
         else
