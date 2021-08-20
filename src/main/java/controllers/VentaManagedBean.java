@@ -14,11 +14,12 @@ import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 
 @Named(value="VentaMB")
-@RequestScoped
+@ViewScoped
 public class VentaManagedBean implements Serializable{
     
     private ClienteVenta cliente;
@@ -37,10 +38,12 @@ public class VentaManagedBean implements Serializable{
     public VentaManagedBean(){
         this.cliente = new ClienteVenta();
         this.clienteDAO = new ClienteVentaDao();
+        
         this.producto = new Producto();
         this.productoDao = new ProductoDAO();
         this.codigoProducto = 0;
-        System.out.println("Started");
+        this.nombreProducto = "XXXXXXX";
+        
     }
        
     //Buscar cliente
@@ -60,11 +63,12 @@ public class VentaManagedBean implements Serializable{
     
     //Buscar Producto
     public void BuscarProducto(){
-        this.producto = productoDao.ObtenerProducto(this.codigoProducto);
+        this.nombreProducto = "";
+        this.producto = this.productoDao.ObtenerProducto(this.codigoProducto);
         if(this.producto == null)
             System.out.print("No existe el producto " + this.nombreProducto);
         else{
-            System.out.print("Existe el producto");
+            System.out.print("Existe el producto" + this.nombreProducto);
             this.nombreProducto = this.producto.getDescripcion();
             this.precioProducto = this.producto.getPrecioUnitario();
         }

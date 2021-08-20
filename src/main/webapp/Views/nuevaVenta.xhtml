@@ -33,15 +33,15 @@
                             <h:panelGrid columns="3">
                                 <p:outputLabel value="Codigo: "/>
                                 <p:inputText id="ItemCodigo" value="#{VentaMB.codigoProducto}" />
-                                <p:commandButton value="Buscar" update="NombreProducto"/>
+                                <p:commandButton value="Buscar" actionListener="#{VentaMB.BuscarProducto}" update="detalleProducto"/>
                             </h:panelGrid>
                             <p:divider/>
-                            <h:panelGrid columns="3" >
+                            <h:panelGrid id="detalleProducto" columns="3" >
                                 <p:outputLabel value="Producto"/>
-                                <p:inputText id="NombreProducto" value="XXXXXXXXXXXX" disabled="true" />
+                                <p:inputText id="NombreProducto" value="#{VentaMB.nombreProducto}" disabled="true" />
                                 <div/>
                                 <p:outputLabel value="Precio: "/>
-                                <p:inputNumber id="priceTextBox" value="0.00" modifyValueOnWheel="false" disabled="true" />
+                                <p:inputNumber id="priceTextBox" value="#{VentaMB.precioProducto}" modifyValueOnWheel="false" disabled="true" />
                                 <div/>
                                 <p:outputLabel value="Cantidad: "/>
                                 <p:inputNumber value="0.00" modifyValueOnWheel="true" />

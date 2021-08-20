@@ -41,33 +41,45 @@ public class ProductoDAO {
 
     public Producto ObtenerProducto(int id) {
         ResultSet rs;
+
         try {
             String code = String.valueOf(id);
             con.abrirConexion();
-            rs = con.ejecutarConsulta("select * from public.productos where codprincipal = " + code + " or codauxiliar = " + code + ";");
+            rs = con.ejecutarConsulta("select * from public.buscarproductocodigo(" + code + ")");
 
-            if(rs != null)
-                System.out.println("Producto " + code + " existe");
-            else
-                System.out.println("Producto " + code + " NO existe");
-            
-            con.cerrarConexion();
-            if (rs.next()) {
-                product.setCodigo(rs.getInt(1));
-                product.setCodigoAux(rs.getInt(2));
-                product.setStock(rs.getInt(3));
-                product.setDescripcion(rs.getString(4));
-                product.setDetalleAdicional(rs.getString(5));
-                product.setPrecioUnitario(rs.getFloat(6));
-                product.setSubsidio(rs.getFloat(7));
-                product.setIce(rs.getFloat(8));
-                product.setIva(rs.getFloat(9));
-                product.setDescuento(rs.getFloat(10));
+            if (rs == null) {
+                System.out.println("No existen registros");
+            } else {
+                System.out.println("Existen registros ");
+                
+                int aux = 0;
+                while(rs.next())
+                    aux++;
+                System.out.println("Registros obtenidos: " + String.valueOf(aux));
+                
+                rs.first();
+                
+                while (rs.next()) {
+                    this.product.setCodigo(rs.getInt(1));
+                    this.product.setCodigoAux(rs.getInt(2));
+                    this.product.setStock(rs.getInt(3));
+                    this.product.setDescripcion(rs.getString(4));
+                    this.product.setPrecioUnitario(rs.getFloat(5));
+                    this.product.setSubsidio(rs.getFloat(6));
+                    this.product.setIce(rs.getFloat(7));
+                    this.product.setIva(rs.getFloat(8));
+                    this.product.setDescuento(rs.getFloat(9));
+                }
             }
+            con.cerrarConexion();
+
+            return this.product;
         } catch (Exception e) {
-            if(con.isEstado())
+            if (con.isEstado()) {
                 con.cerrarConexion();
+            }
         }
-        return product;
+        
+        return null;
     }
 }
