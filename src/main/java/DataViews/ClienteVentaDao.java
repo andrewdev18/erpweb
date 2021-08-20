@@ -55,6 +55,7 @@ public class ClienteVentaDao implements Serializable {
             
             return temp;
         } catch (Exception e) {
+            
         }
 
         return null;
