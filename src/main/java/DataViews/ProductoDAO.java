@@ -44,7 +44,6 @@ public class ProductoDAO {
         try {
             con.abrirConexion();
             rs = con.ejecutarConsulta("Select * from buscarproductocodigo(" + id + ")");
-            con.cerrarConexion();
             if (rs.next()) {
                 product.setCodigo(rs.getInt(1));
                 product.setStock(rs.getInt(2));
@@ -53,10 +52,12 @@ public class ProductoDAO {
                 product.setSubsidio(rs.getFloat(5));
                 product.setIce(rs.getFloat(6));
                 product.setIva(rs.getFloat(7));
-                product.setDescuento(rs.getFloat(9));
+                product.setDescuento(rs.getFloat(8));
+                 con.cerrarConexion();
             }
         } catch (Exception e) {
-
+            if(con.isEstado())
+                con.cerrarConexion();
         }
         return product;
     }

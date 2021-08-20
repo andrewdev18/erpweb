@@ -80,7 +80,7 @@ public class ProductoManagedBean implements Serializable{
     
     public void obtenerProducto(){
         int codigo = Integer.parseInt(this.codigoproducto);
-        product = productdao.ObtenerProducto(codigo);
+        this.product = this.productdao.ObtenerProducto(codigo);
         System.out.print("No hay errores");
         if(this.product!=null){
             this.nombreProducto=this.product.getProducto();
