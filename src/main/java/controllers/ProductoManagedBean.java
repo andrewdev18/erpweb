@@ -19,7 +19,7 @@ import javax.inject.Named;
 public class ProductoManagedBean implements Serializable{
     String codigoproducto;
     String nombreProducto;
-    float precio;
+    float precioProducto;
     int cantidad;
 
     public ProductoDAO getProductdao() {
@@ -38,12 +38,12 @@ public class ProductoManagedBean implements Serializable{
         this.nombreProducto = nombreProducto;
     }
 
-    public float getPrecio() {
-        return precio;
+    public float getPrecioProducto() {
+        return precioProducto;
     }
 
-    public void setPrecio(float precio) {
-        this.precio = precio;
+    public void setPrecioProducto(float precio) {
+        this.precioProducto = precio;
     }
 
     public int getCantidad() {
@@ -78,13 +78,14 @@ public class ProductoManagedBean implements Serializable{
         this.product = product;
     }
     
+    
     public void obtenerProducto(){
         int codigo = Integer.parseInt(this.codigoproducto);
         product = productdao.ObtenerProducto(codigo);
         System.out.print("No hay errores");
         if(this.product!=null){
-            this.nombreProducto=this.product.getProducto();
-            this.precio=this.product.getPrecio_unitario();
+            this.nombreProducto=this.product.getDescripcion();
+            this.precioProducto=this.product.getPrecioUnitario();
             System.out.print("ProductoObtenido");
         }
         else{

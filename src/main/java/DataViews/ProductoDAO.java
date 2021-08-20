@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package DataViews;
+
 import java.io.Serializable;
 import Models.Producto;
 import DataViews.Conexion;
@@ -17,8 +18,7 @@ import javax.enterprise.context.RequestScoped;
 @ManagedBean
 @RequestScoped
 public class ProductoDAO {
-    
-    private List<Producto> listadecompra = new ArrayList();
+
     private Producto product;
     Conexion con;
 
@@ -26,7 +26,7 @@ public class ProductoDAO {
         con.abrirConexion();
         this.product = product;
     }
-    
+
     public ProductoDAO() {
         this.con = new Conexion();
     }
@@ -38,34 +38,35 @@ public class ProductoDAO {
     public void setProduct(Producto product) {
         this.product = product;
     }
-    
-    public Producto ObtenerProducto(int id){
+
+    public Producto ObtenerProducto(int id) {
         ResultSet rs;
         try {
+            String code = String.valueOf(id);
             con.abrirConexion();
-            rs = con.ejecutarConsulta("Select * from buscarproductocodigo(" + id + ")");
+            rs = con.ejecutarConsulta("select * from public.productos where codprincipal = " + code + " or codauxiliar = " + code + ";");
+
+            if(rs != null)
+                System.out.println("Producto " + code + " existe");
+            else
+                System.out.println("Producto " + code + " NO existe");
+            
             con.cerrarConexion();
             if (rs.next()) {
                 product.setCodigo(rs.getInt(1));
-                product.setStock(rs.getInt(2));
-                product.setProducto(rs.getString(3));
-                product.setPrecio_unitario(rs.getFloat(4));
-                product.setSubsidio(rs.getFloat(5));
-                product.setIce(rs.getFloat(6));
-                product.setIva(rs.getFloat(7));
-                product.setDescuento(rs.getFloat(9));
+                product.setCodigoAux(rs.getInt(2));
+                product.setStock(rs.getInt(3));
+                product.setDescripcion(rs.getString(4));
+                product.setDetalleAdicional(rs.getString(5));
+                product.setPrecioUnitario(rs.getFloat(6));
+                product.setSubsidio(rs.getFloat(7));
+                product.setIce(rs.getFloat(8));
+                product.setIva(rs.getFloat(9));
+                product.setDescuento(rs.getFloat(10));
             }
         } catch (Exception e) {
 
         }
         return product;
-    }
-
-    public List<Producto> getListadecompra() {
-        return listadecompra;
-    }
-
-    public void setListadecompra(List<Producto> listadecompra) {
-        this.listadecompra = listadecompra;
     }
 }

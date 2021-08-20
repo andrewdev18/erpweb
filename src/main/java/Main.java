@@ -1,6 +1,4 @@
 
-import DataViews.RetencionDAO;
-import Models.Retencion;
 import java.util.List;
 
 /*
@@ -19,10 +17,6 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Retencion retencion = new Retencion();
-        RetencionDAO retencionDAO = new RetencionDAO();
-        List<Retencion> listaRetenciones = retencionDAO.obtener_retenciones(3);
-        System.out.println(listaRetenciones.size());
     }
 
 }

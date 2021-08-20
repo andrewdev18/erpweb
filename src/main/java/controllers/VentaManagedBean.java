@@ -6,7 +6,9 @@
 package controllers;
 
 import DataViews.ClienteVentaDao;
+import DataViews.ProductoDAO;
 import Models.ClienteVenta;
+import Models.Producto;
 import java.io.Serializable;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
@@ -23,15 +25,25 @@ public class VentaManagedBean implements Serializable{
     private ClienteVentaDao clienteDAO;
     private String clienteIdNum;
     private String clienteNombre;
+    
+    private ProductoDAO productoDao;
+    private Producto producto;
+    private int codigoProducto;
+    private String nombreProducto;
+    private float precioProducto;
 
     
     //Constructor
     public VentaManagedBean(){
-        cliente = new ClienteVenta();
-        clienteDAO = new ClienteVentaDao();
+        this.cliente = new ClienteVenta();
+        this.clienteDAO = new ClienteVentaDao();
+        this.producto = new Producto();
+        this.productoDao = new ProductoDAO();
+        this.codigoProducto = 0;
         System.out.println("Started");
     }
        
+    //Buscar cliente
     public void BuscarClienteVenta(){
         this.cliente = clienteDAO.BuscarCliente(this.clienteIdNum);
         if(this.cliente != null)
@@ -45,6 +57,20 @@ public class VentaManagedBean implements Serializable{
             System.out.print("Sin cliente");
     }
 
+    
+    //Buscar Producto
+    public void BuscarProducto(){
+        this.producto = productoDao.ObtenerProducto(this.codigoProducto);
+        if(this.producto == null)
+            System.out.print("No existe el producto " + this.nombreProducto);
+        else{
+            System.out.print("Existe el producto");
+            this.nombreProducto = this.producto.getDescripcion();
+            this.precioProducto = this.producto.getPrecioUnitario();
+        }
+    }
+    
+    //--------------------Getter y Setter-------------------//
     public ClienteVenta getCliente() {
         return cliente;
     }
@@ -72,6 +98,46 @@ public class VentaManagedBean implements Serializable{
 
     public void setClienteNombre(String clienteNombre) {
         this.clienteNombre = clienteNombre;
+    }
+
+    public ProductoDAO getProductoDao() {
+        return productoDao;
+    }
+
+    public void setProductoDao(ProductoDAO productoDao) {
+        this.productoDao = productoDao;
+    }
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
+
+    public String getNombreProducto() {
+        return nombreProducto;
+    }
+
+    public void setNombreProducto(String nombreProducto) {
+        this.nombreProducto = nombreProducto;
+    }
+
+    public float getPrecioProducto() {
+        return precioProducto;
+    }
+
+    public void setPrecioProducto(float precioProducto) {
+        this.precioProducto = precioProducto;
+    }
+
+    public int getCodigoProducto() {
+        return codigoProducto;
+    }
+
+    public void setCodigoProducto(int codigoProducto) {
+        this.codigoProducto = codigoProducto;
     }
 
     

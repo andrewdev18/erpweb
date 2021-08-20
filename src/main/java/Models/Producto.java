@@ -8,17 +8,19 @@ package Models;
 import java.io.Serializable;
 
 public class Producto implements Serializable {
-    public int codigo;
-    public int stock;
-    public String producto;
-    public String detalle;
-    public float precio_unitario;
-    public float subsidio;
-    public float ice;
-    public float iva;
-    public float descuento;
+    private int codigo;
+    private int codigoAux;
+    private int stock;
+    private String descripcion;
+    private String detalleAdicional;
+    private float precioUnitario;
+    private float subsidio;
+    private float ice;
+    private float iva;
+    private float descuento;
 
     public Producto() {
+        
     }
 
     public int getCodigo() {
@@ -29,6 +31,14 @@ public class Producto implements Serializable {
         this.codigo = codigo;
     }
 
+    public int getCodigoAux() {
+        return codigoAux;
+    }
+
+    public void setCodigoAux(int codigoAux) {
+        this.codigoAux = codigoAux;
+    }
+
     public int getStock() {
         return stock;
     }
@@ -37,28 +47,28 @@ public class Producto implements Serializable {
         this.stock = stock;
     }
 
-    public String getProducto() {
-        return producto;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setProducto(String producto) {
-        this.producto = producto;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
-    public String getDetalle() {
-        return detalle;
+    public String getDetalleAdicional() {
+        return detalleAdicional;
     }
 
-    public void setDetalle(String detalle) {
-        this.detalle = detalle;
+    public void setDetalleAdicional(String detalleAdicional) {
+        this.detalleAdicional = detalleAdicional;
     }
 
-    public float getPrecio_unitario() {
-        return precio_unitario;
+    public float getPrecioUnitario() {
+        return precioUnitario;
     }
 
-    public void setPrecio_unitario(float precio_unitario) {
-        this.precio_unitario = precio_unitario;
+    public void setPrecioUnitario(float precioUnitario) {
+        this.precioUnitario = precioUnitario;
     }
 
     public float getSubsidio() {
@@ -91,5 +101,6 @@ public class Producto implements Serializable {
 
     public void setDescuento(float descuento) {
         this.descuento = descuento;
-    }   
+    }
+
 }

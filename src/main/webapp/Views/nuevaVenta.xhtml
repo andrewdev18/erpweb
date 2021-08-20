@@ -32,7 +32,7 @@
                         <p:panel header="Búsqueda de productos" style="widht: 45%; position: relative" >
                             <h:panelGrid columns="3">
                                 <p:outputLabel value="Codigo: "/>
-                                <p:inputText id="ItemCodigo" value="0" />
+                                <p:inputText id="ItemCodigo" value="#{VentaMB.codigoProducto}" />
                                 <p:commandButton value="Buscar" update="NombreProducto"/>
                             </h:panelGrid>
                             <p:divider/>
