@@ -12,6 +12,8 @@ import Models.ClienteVenta;
 import Models.DetalleVenta;
 import Models.Producto;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +38,7 @@ public class VentaManagedBean implements Serializable {
     private int codigoProducto;
     private String nombreProducto;
     private float precioProducto;
+    private double subtotalventa;
 
     private DetalleVenta detalleVenta;
     private DetalleVentaDAO detalleDAO;
@@ -51,6 +54,7 @@ public class VentaManagedBean implements Serializable {
         this.productoDao = new ProductoDAO();
         this.codigoProducto = 0;
         this.nombreProducto = "XXXXXXX";
+        this.subtotalventa=0;
 
         this.listaDetalle = new ArrayList<>();
         this.cantidad = 1;
@@ -94,14 +98,11 @@ public class VentaManagedBean implements Serializable {
             detalle.setDescuento(this.producto.getDescuento());
             detalle.setPrecio(this.producto.getPrecioUnitario());
             detalle.setProducto(this.producto);
-            
-            DecimalFormat df = new DecimalFormat();
-            df.setMaximumFractionDigits(2);
-            double tempSubTotal = (this.cantidad * this.precioProducto);
-                        
+            BigDecimal controldecimal = new BigDecimal((this.cantidad * this.precioProducto)).setScale(2, RoundingMode.UP);
+            double tempSubTotal = controldecimal.doubleValue();                        
             detalle.setSubTotal(tempSubTotal);
+            this.subtotalventa=this.subtotalventa+controldecimal.doubleValue();
             this.listaDetalle.add(detalle);
-
             this.cantidad = 1;
             this.codigoProducto = 0;
             this.producto = new Producto();
@@ -210,4 +211,13 @@ public class VentaManagedBean implements Serializable {
     public void setCantidad(double cantidad) {
         this.cantidad = cantidad;
     }
+
+    public double getSubtotalventa() {
+        return subtotalventa;
+    }
+
+    public void setSubtotalventa(double subtotalventa) {
+        this.subtotalventa = subtotalventa;
+    }
+    
 }
