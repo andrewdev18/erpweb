@@ -119,11 +119,11 @@ public class VentaManagedBean implements Serializable {
             detalle.setDescuento(this.producto.getDescuento());
             detalle.setPrecio(this.producto.getPrecioUnitario());
             detalle.setProducto(this.producto);
-            detalle.setSubTotal(this.cantidad * this.precioProducto);
             
             BigDecimal controldecimal = new BigDecimal((this.cantidad * this.precioProducto)).setScale(2, RoundingMode.UP);
             double tempSubTotal = controldecimal.doubleValue();
             detalle.setSubTotal(tempSubTotal);
+            
             this.subTotalVenta = this.subTotalVenta + controldecimal.doubleValue();
 
             this.listaDetalle.add(detalle);
@@ -152,6 +152,23 @@ public class VentaManagedBean implements Serializable {
     //Eliminar un producto de la lista
     public void EliminarProducto(DetalleVenta detalle) {
         this.listaDetalle.remove(detalle);
+        
+        BigDecimal precioRedondeado = new BigDecimal((detalle.getProducto().getPrecioUnitario())).setScale(2, RoundingMode.UP);
+        BigDecimal cantidadRedondeada = new BigDecimal((detalle.getCantidad())).setScale(2, RoundingMode.UP);
+        
+        this.subTotalVenta -= precioRedondeado.doubleValue() * cantidadRedondeada.doubleValue();
+        
+        if (detalle.getProducto().getIva() != 0) {
+                this.subtotal12 -= precioRedondeado.doubleValue() * cantidadRedondeada.doubleValue();
+            } else {
+                this.subtotal0 -= precioRedondeado.doubleValue() * cantidadRedondeada.doubleValue();
+            }
+        
+            this.iva = this.iva - detalle.getProducto().getIva() * cantidadRedondeada.doubleValue();
+            this.ice = this.iva - detalle.getProducto().getIce() * cantidadRedondeada.doubleValue();
+
+            this.total = this.subtotal0 + this.subtotal12 + this.iva + this.ice;
+        
         this.productoSeleccionado = null;
         PrimeFaces.current().ajax().update("ventaForm:itemsTable");
         System.out.println("Eliminado");

@@ -63,7 +63,7 @@
                         </f:facet>
 
                         <p:column headerText="Eliminar" >
-                            <p:commandButton icon="pi pi-trash" styleClass="ui-button-danger" process="@this" actionListener="#{VentaMB.EliminarProducto(ListaItems)}" update="itemsTable" />
+                            <p:commandButton icon="pi pi-trash" styleClass="ui-button-danger" process="@this" actionListener="#{VentaMB.EliminarProducto(ListaItems)}" update="subtotalVenta" />
                         </p:column>
 
                         <p:column headerText="Cod">
@@ -101,7 +101,7 @@
                         <p:columnGroup type="footer">
                             <p:row>
                                 <p:column colspan="6" style="text-align:right" footerText="Total:"/>
-                                <p:column style="text-align:left" footerText="#{VentaMB.subTotalVenta}" ></p:column>
+                                <p:column style="text-align:left" footerText="#{VentaMB.subTotalVenta}" id="subtotalVenta" ></p:column>
                             </p:row>
                         </p:columnGroup>
                     </p:dataTable>
