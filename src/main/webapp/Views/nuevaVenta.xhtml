@@ -55,13 +55,15 @@
 
                     <div style="height: 30px" />
 
-                    <p:dataTable var="ListaItems" id="itemsTable" value="#{VentaMB.listaDetalle}" >
+                    <p:dataTable var="ListaItems" id="itemsTable" value="#{VentaMB.listaDetalle}" selection="#{VentaMB.productoSeleccionado}" rowKey="#{ListaItems.codprincipal}" >
+                        <p:ajax event="rowSelect" listener="#{VentaMB.onRowSelect}" update="ventaForm" />
+                        
                         <f:facet name="header">
                             Items
                         </f:facet>
                         
                         <p:column headerText="Eliminar" >
-                            <p:commandButton icon="pi pi-trash" styleClass="ui-button-danger" />
+                            <p:commandButton icon="pi pi-trash" styleClass="ui-button-danger" process="@this" actionListener="#{VentaMB.EliminarProducto}" update="itemsTable" />
                         </p:column>
                         
                         <p:column headerText="Cod">
@@ -98,8 +100,8 @@
 
                         <p:columnGroup type="footer">
                             <p:row>
-                                <p:column colspan="5" style="text-align:right" footerText="Total:"/>
-                                <p:column style="text-align:left" footerText="#{VentaMB.subTotalVenta}"/>
+                                <p:column colspan="6" style="text-align:right" footerText="Total:"/>
+                                <p:column style="text-align:left" footerText="#{VentaMB.subTotalVenta}" ></p:column>
                             </p:row>
                         </p:columnGroup>
                     </p:dataTable>

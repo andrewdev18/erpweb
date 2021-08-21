@@ -24,6 +24,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import org.primefaces.event.SelectEvent;
 
 @Named(value = "VentaMB")
 @ViewScoped
@@ -33,6 +34,8 @@ public class VentaManagedBean implements Serializable {
     private ClienteVentaDao clienteDAO;
     private String clienteIdNum;
     private String clienteNombre;
+
+    private DetalleVenta productoSeleccionado;
 
     private ProductoDAO productoDao;
     private Producto producto;
@@ -45,14 +48,13 @@ public class VentaManagedBean implements Serializable {
     private DetalleVentaDAO detalleDAO;
     private List<DetalleVenta> listaDetalle;
     private double cantidad;
-    
+
     private double subtotal12;
     private double subtotal0;
     private double descuento;
     private double ice;
     private double iva;
     private double total;
-    
 
     //Constructor
     public VentaManagedBean() {
@@ -64,16 +66,18 @@ public class VentaManagedBean implements Serializable {
         this.codigoProducto = 0;
         this.nombreProducto = "XXXXXXX";
         this.subTotalVenta = 0;
-        
+
         this.subtotal12 = 0;
         this.subtotal0 = 0;
         this.descuento = 0;
         this.ice = 0;
         this.iva = 0;
         this.total = 0;
-        
+
         this.listaDetalle = new ArrayList<>();
         this.cantidad = 1;
+
+        this.productoSeleccionado = null;
     }
 
     //Buscar cliente
@@ -115,7 +119,7 @@ public class VentaManagedBean implements Serializable {
             detalle.setPrecio(this.producto.getPrecioUnitario());
             detalle.setProducto(this.producto);
             detalle.setSubTotal(this.cantidad * this.precioProducto);
-
+            
             BigDecimal controldecimal = new BigDecimal((this.cantidad * this.precioProducto)).setScale(2, RoundingMode.UP);
             double tempSubTotal = controldecimal.doubleValue();
             detalle.setSubTotal(tempSubTotal);
@@ -125,21 +129,33 @@ public class VentaManagedBean implements Serializable {
             this.cantidad = 1;
             this.codigoProducto = 0;
             this.nombreProducto = "";
-            
-            if(this.producto.getIva() != 0)
+
+            if (this.producto.getIva() != 0) {
                 this.subtotal12 += this.producto.getPrecioUnitario() * detalle.getCantidad();
-            else
+            } else {
                 this.subtotal0 += this.producto.getPrecioUnitario() * detalle.getCantidad();
-            
+            }
+
             this.iva = this.iva + this.producto.getIva();
             this.ice = this.iva + this.producto.getIce();
-            
+
             this.total = this.subtotal0 + this.subtotal12 + this.iva + this.ice;
-            
+
             this.producto = null;
         } else {
             System.out.println("No hay producto seleccionado");
         }
+    }
+
+    
+    //Eliminar un producto de la lista
+    public void EliminarProducto() {
+        this.listaDetalle.remove(this.productoSeleccionado);
+        System.out.println("Eliminado");
+    }
+    
+    public void onRowSelect(SelectEvent event){
+        this.productoSeleccionado = ((DetalleVenta) event.getObject());
     }
 
     //--------------------Getter y Setter-------------------//
@@ -298,7 +314,13 @@ public class VentaManagedBean implements Serializable {
     public void setTotal(double total) {
         this.total = total;
     }
-    
-    
+
+    public DetalleVenta getProductoSeleccionado() {
+        return productoSeleccionado;
+    }
+
+    public void setProductoSeleccionado(DetalleVenta productoSeleccionado) {
+        this.productoSeleccionado = productoSeleccionado;
+    }
 
 }
