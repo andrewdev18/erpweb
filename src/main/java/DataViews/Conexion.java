@@ -18,19 +18,19 @@ public class Conexion implements Serializable{
     private String mensaje;
     private FacesMessage.Severity tipoMensaje;
 
-    /*Conexion a BD Global
-    
-    private String url = "jdbc:postgresql://ec2-44-196-170-156.compute-1.amazonaws.com:5432/dehvnainad9pt5";
+    //Conexion a BD Global
+    private String url = "jdbc:postgresql://ec2-44-196-170-156.compute-1.amazonaws.com:5432/dehvnainad9pt5?sslmode=require";
     private String usuario = "tzorpkxhvzjqzc";
     private String clave = "5a2419e3803bc7e7b136fcc9ac527b171973f8bcea456c5c55ccb4a1f90cba3d";
     private String classForName = "org.postgresql.Driver";
-    */
+    
 
+    /*
     private String url = "jdbc:postgresql://localhost:5432/erp_global";
     private String usuario = "postgres";
     private String clave = "123456";
     private String classForName = "org.postgresql.Driver";
-    
+    */
     
      public Conexion() {
         estado = true;

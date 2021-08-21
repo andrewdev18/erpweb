@@ -58,7 +58,8 @@ public class VentaManagedBean implements Serializable {
     private double total;
 
     //Constructor
-    public VentaManagedBean() {
+    @PostConstruct
+    public void VentaManagedBean() {
         this.cliente = new ClienteVenta();
         this.clienteDAO = new ClienteVentaDao();
 
