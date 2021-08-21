@@ -55,17 +55,17 @@
 
                     <div style="height: 30px" />
 
-                    <p:dataTable var="ListaItems" id="itemsTable" value="#{VentaMB.listaDetalle}" selection="#{VentaMB.productoSeleccionado}" rowKey="#{ListaItems.codprincipal}" >
-                        <p:ajax event="rowSelect" listener="#{VentaMB.onRowSelect}" update="ventaForm" />
-                        
+                    <p:dataTable var="ListaItems" id="itemsTable" value="#{VentaMB.listaDetalle}" selection="#{VentaMB.productoSeleccionado}" 
+                                 rowKey="#{ListaItems.producto.codigoAux}" selectionMode="single" >
+
                         <f:facet name="header">
                             Items
                         </f:facet>
-                        
+
                         <p:column headerText="Eliminar" >
-                            <p:commandButton icon="pi pi-trash" styleClass="ui-button-danger" process="@this" actionListener="#{VentaMB.EliminarProducto}" update="itemsTable" />
+                            <p:commandButton icon="pi pi-trash" styleClass="ui-button-danger" process="@this" actionListener="#{VentaMB.EliminarProducto(ListaItems)}" update="itemsTable" />
                         </p:column>
-                        
+
                         <p:column headerText="Cod">
                             <h:outputText value="#{ListaItems.producto.codigoAux}" />
                         </p:column>
@@ -117,7 +117,7 @@
                         <p:panel header="Valor de venta" style="text-align: left; width: 100%; float: right">
                             <h:panelGrid columns="2">
                                 <p:outputLabel value="Subtotal 12%"/>
-                                <p:inputText value="#{VentaMB.subtotal12}" disabled="true"/>
+                                <p:inputText value="#{VentaMB.subtotal12}" disabled="true" />
                                 <p:outputLabel value="Subtotal 0%"/>
                                 <p:inputText value="#{VentaMB.subtotal0}" disabled="true"/>
                                 <p:outputLabel value="DESCUENTO"/>

@@ -60,6 +60,8 @@ public class ClienteVentaDao implements Serializable {
                 con.cerrarConexion();
             con.cerrarConexion();
             return null;
+            
+            //colocar FINALLY
         }
     }
 }

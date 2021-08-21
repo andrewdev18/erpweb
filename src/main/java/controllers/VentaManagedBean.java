@@ -24,6 +24,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import org.primefaces.PrimeFaces;
 import org.primefaces.event.SelectEvent;
 
 @Named(value = "VentaMB")
@@ -129,7 +130,7 @@ public class VentaManagedBean implements Serializable {
             this.cantidad = 1;
             this.codigoProducto = 0;
             this.nombreProducto = "";
-
+            
             if (this.producto.getIva() != 0) {
                 this.subtotal12 += this.producto.getPrecioUnitario() * detalle.getCantidad();
             } else {
@@ -149,15 +150,15 @@ public class VentaManagedBean implements Serializable {
 
     
     //Eliminar un producto de la lista
-    public void EliminarProducto() {
-        this.listaDetalle.remove(this.productoSeleccionado);
+    public void EliminarProducto(DetalleVenta detalle) {
+        this.listaDetalle.remove(detalle);
+        this.productoSeleccionado = null;
+        PrimeFaces.current().ajax().update("ventaForm:itemsTable");
         System.out.println("Eliminado");
     }
     
-    public void onRowSelect(SelectEvent event){
-        this.productoSeleccionado = ((DetalleVenta) event.getObject());
-    }
-
+    
+    
     //--------------------Getter y Setter-------------------//
     public ClienteVenta getCliente() {
         return cliente;
