@@ -5,11 +5,13 @@
  */
 package Models;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Andres
  */
-public class DetalleVenta {
+public class DetalleVenta implements Serializable {
     private int iddetalleventa;
     private int idventa;
     private int codprincipal;
