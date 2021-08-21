@@ -11,7 +11,7 @@
         <ui:composition template="./../Plantilla/Plantilla.xhtml">
 
             <ui:define name="content">
-                <h:form >
+                <h:form id="proformaForm" >
                     <growl id="msg" />
 
                     <div style="font-weight: bold; background-color: #036fab; 
@@ -23,31 +23,32 @@
                         <p:panel header="Cliente" >
                             <h:panelGrid columns="4" width="50%" >
                                 <p:outputLabel value="Identificación: "/>
-                                <p:inputText id="IdCliente" value="#{VentaMB.clienteIdNum}" />
+                                <p:inputText id="IdNumCliente" value="#{VentaMB.clienteIdNum}" />
                                 <p:outputLabel value="Nombre: "/>
                                 <p:inputText id="NombreCliente" value="#{VentaMB.clienteNombre}" disabled="true" />
-                                <p:commandButton actionListener="#{VentaMB.BuscarClienteVenta}" value="Buscar" update="ventaForm" />
+                                <p:commandButton actionListener="#{VentaMB.BuscarClienteVenta}" value="Buscar" update="proformaForm" />
                             </h:panelGrid>
                         </p:panel>
 
-                        <p:panel header="Búsqueda de productos" style="widht: 45%; position: relative" >
+
+                        <p:panel id="busquedaProductoPanel" header="Búsqueda de productos" style="width: 45%; position: relative" >
                             <h:panelGrid columns="3">
                                 <p:outputLabel value="Codigo: "/>
                                 <p:inputText id="ItemCodigo" value="#{VentaMB.codigoProducto}" />
-                                <p:commandButton value="Buscar" ajax="false" actionListener="#{VentaMB.BuscarProducto}" update="Detalleproducto" />
+                                <p:commandButton value="Buscar" actionListener="#{VentaMB.BuscarProducto}" update="detalleProducto"/>
                             </h:panelGrid>
                             <p:divider/>
-                            <h:panelGrid columns="3" id="Detalleproducto" >
+                            <h:panelGrid id="detalleProducto" columns="3" >
                                 <p:outputLabel value="Producto"/>
                                 <p:inputText id="NombreProducto" value="#{VentaMB.nombreProducto}" disabled="true" />
                                 <div/>
                                 <p:outputLabel value="Precio: "/>
-                                <p:inputNumber id="priceTextBox" value="#{VentaMB.precioProducto}" modifyValueOnWheel="true" disabled="true" />
+                                <p:inputNumber id="priceTextBox" value="#{VentaMB.precioProducto}" modifyValueOnWheel="false" disabled="true" />
                                 <div/>
                                 <p:outputLabel value="Cantidad: "/>
                                 <p:inputNumber value="#{VentaMB.cantidad}" modifyValueOnWheel="true" />
                                 <div/>
-                                <p:commandButton value="Agregar" actionListener="#{VentaMB.AgregarProductoLista}" update="itemsTable" />
+                                <p:commandButton value="Agregar" actionListener="#{VentaMB.AgregarProductoLista}" update="itemsTable busquedaProductoPanel" />
                             </h:panelGrid>
                         </p:panel>
                     </div>
@@ -59,34 +60,47 @@
                         <f:facet name="header">
                             Items
                         </f:facet>
+                        
+                        <p:column headerText="Eliminar" >
+                            <p:commandButton icon="pi pi-trash" styleClass="ui-button-danger" />
+                        </p:column>
+                        
                         <p:column headerText="Cod">
                             <h:outputText value="#{ListaItems.producto.codigoAux}" />
                         </p:column>
-                        
+
                         <p:column headerText="Producto" >
                             <h:outputText value="#{ListaItems.producto.descripcion}" />
                         </p:column>
-                        
+
                         <p:column headerText="Precio Unitario">
-                            <h:outputText value="#{ListaItems.producto.precioUnitario}" />
+                            <h:outputText value="#{ListaItems.producto.precioUnitario}" >
+                                <f:convertNumber pattern="#0.00" />
+                            </h:outputText>
                         </p:column>
-                        
+
                         <p:column headerText="Descuento">
-                            <h:outputText value="#{ListaItems.producto.descuento}" />
+                            <h:outputText value="#{ListaItems.producto.descuento}" >
+                                <f:convertNumber pattern="#0.00" />
+                            </h:outputText>
                         </p:column>
-                        
+
                         <p:column headerText="Cantidad">
-                            <h:outputText value="#{ListaItems.cantidad}"/>
+                            <h:outputText value="#{ListaItems.cantidad}">
+                                <f:convertNumber pattern="#0.00" />
+                            </h:outputText>
                         </p:column>
-                        
+
                         <p:column headerText="Subtotal">
-                            <h:outputText value="#{ListaItems.subTotal}"/>
+                            <h:outputText value="#{ListaItems.subTotal}">
+                                <f:convertNumber pattern="#0.00" />
+                            </h:outputText>
                         </p:column>
 
                         <p:columnGroup type="footer">
                             <p:row>
                                 <p:column colspan="5" style="text-align:right" footerText="Total:"/>
-                                <p:column style="text-align:left" footerText="#{VentaMB.subtotalventa}"/>
+                                <p:column style="text-align:left" footerText="#{VentaMB.subTotalVenta}"/>
                             </p:row>
                         </p:columnGroup>
                     </p:dataTable>
