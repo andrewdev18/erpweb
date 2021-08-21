@@ -59,6 +59,11 @@
                         <f:facet name="header">
                             Items
                         </f:facet>
+                        
+                        <p:column headerText="Eliminar" >
+                            <p:commandButton icon="pi pi-trash" styleClass="ui-button-danger" />
+                        </p:column>
+                        
                         <p:column headerText="Cod">
                             <h:outputText value="#{ListaItems.producto.codigoAux}" />
                         </p:column>

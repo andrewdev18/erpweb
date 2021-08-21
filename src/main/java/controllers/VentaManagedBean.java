@@ -126,17 +126,13 @@ public class VentaManagedBean implements Serializable {
             this.codigoProducto = 0;
             this.nombreProducto = "";
             
-            
-            double ivaTemp = this.producto.getIva();
-            double iceTemp = this.producto.getIce();
-            
-            if(ivaTemp > 0)
-                this.subtotal12 += this.producto.getPrecioUnitario();
+            if(this.producto.getIva() != 0)
+                this.subtotal12 += this.producto.getPrecioUnitario() * detalle.getCantidad();
             else
-                this.subtotal0 += this.producto.getPrecioUnitario();
+                this.subtotal0 += this.producto.getPrecioUnitario() * detalle.getCantidad();
             
-            this.iva += ivaTemp;
-            this.ice += iceTemp;
+            this.iva = this.iva + this.producto.getIva();
+            this.ice = this.iva + this.producto.getIce();
             
             this.total = this.subtotal0 + this.subtotal12 + this.iva + this.ice;
             
