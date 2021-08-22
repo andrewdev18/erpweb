@@ -47,13 +47,14 @@ public class ProductoDAO {
             String code = String.valueOf(id);
             con.abrirConexion();
             rs = con.ejecutarConsulta("select * from public.buscarproductocodigo(" + code.trim() + ")");
-
+            
             if (rs == null) {
                 System.out.println("No existen registros");
             } else {
                 System.out.println("Existen registros");
                 
                 while (rs.next()) {
+                    System.out.print("Producto " + rs.getInt(1));
                     temp.setCodigo(rs.getInt(1));
                     temp.setCodigoAux(rs.getInt(2));
                     temp.setStock(rs.getInt(3));

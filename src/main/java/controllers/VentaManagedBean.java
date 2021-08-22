@@ -20,8 +20,11 @@ import java.util.Formatter;
 import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
+import javax.ejb.Asynchronous;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import org.primefaces.PrimeFaces;
@@ -99,11 +102,19 @@ public class VentaManagedBean implements Serializable {
     }
 
     //Buscar Producto
+    @Asynchronous
     public void BuscarProducto() {
-        this.nombreProducto = "";
+        this.producto = null;
+        this.nombreProducto = "XXXXXX";
+        this.cantidad = 1;
+        this.precioProducto = 0;
+
         this.producto = this.productoDao.ObtenerProducto(this.codigoProducto);
-        if (this.producto == null) {
+
+        System.out.print(this.producto.getDescripcion());
+        if (this.producto.getDescripcion() == null || this.producto.getDescripcion() == "") {
             System.out.print("Producto nulo");
+            addMessage(FacesMessage.SEVERITY_ERROR, "El producto no existe", "Message Content");
         } else {
             System.out.print("Existe el producto" + this.nombreProducto);
             this.nombreProducto = this.producto.getDescripcion();
@@ -120,18 +131,18 @@ public class VentaManagedBean implements Serializable {
             detalle.setDescuento(this.producto.getDescuento());
             detalle.setPrecio(this.producto.getPrecioUnitario());
             detalle.setProducto(this.producto);
-            
+
             BigDecimal controldecimal = new BigDecimal((this.cantidad * this.precioProducto)).setScale(2, RoundingMode.UP);
             double tempSubTotal = controldecimal.doubleValue();
             detalle.setSubTotal(tempSubTotal);
-            
+
             this.subTotalVenta = this.subTotalVenta + controldecimal.doubleValue();
 
             this.listaDetalle.add(detalle);
             this.cantidad = 1;
             this.codigoProducto = 0;
             this.nombreProducto = "";
-            
+
             if (this.producto.getIva() != 0) {
                 this.subtotal12 += this.producto.getPrecioUnitario() * detalle.getCantidad();
             } else {
@@ -143,40 +154,47 @@ public class VentaManagedBean implements Serializable {
 
             this.total = this.subtotal0 + this.subtotal12 + this.iva + this.ice;
 
+            this.nombreProducto = "XXXXXX";
+            this.cantidad = 1;
+            this.precioProducto = 0;
+
             this.producto = null;
         } else {
             System.out.println("No hay producto seleccionado");
         }
     }
 
-    
     //Eliminar un producto de la lista
     public void EliminarProducto(DetalleVenta detalle) {
         this.listaDetalle.remove(detalle);
-        
+
         BigDecimal precioRedondeado = new BigDecimal((detalle.getProducto().getPrecioUnitario())).setScale(2, RoundingMode.UP);
         BigDecimal cantidadRedondeada = new BigDecimal((detalle.getCantidad())).setScale(2, RoundingMode.UP);
-        
-        this.subTotalVenta -= precioRedondeado.doubleValue() * cantidadRedondeada.doubleValue();
-        
-        if (detalle.getProducto().getIva() != 0) {
-                this.subtotal12 -= precioRedondeado.doubleValue() * cantidadRedondeada.doubleValue();
-            } else {
-                this.subtotal0 -= precioRedondeado.doubleValue() * cantidadRedondeada.doubleValue();
-            }
-        
-            this.iva = this.iva - detalle.getProducto().getIva() * cantidadRedondeada.doubleValue();
-            this.ice = this.iva - detalle.getProducto().getIce() * cantidadRedondeada.doubleValue();
 
-            this.total = this.subtotal0 + this.subtotal12 + this.iva + this.ice;
-        
+        this.subTotalVenta -= precioRedondeado.doubleValue() * cantidadRedondeada.doubleValue();
+
+        if (detalle.getProducto().getIva() != 0) {
+            this.subtotal12 -= precioRedondeado.doubleValue() * cantidadRedondeada.doubleValue();
+        } else {
+            this.subtotal0 -= precioRedondeado.doubleValue() * cantidadRedondeada.doubleValue();
+        }
+
+        this.iva -= detalle.getProducto().getIva() * cantidadRedondeada.doubleValue();
+        this.ice -= detalle.getProducto().getIce() * cantidadRedondeada.doubleValue();
+
+        this.total = this.subtotal0 + this.subtotal12 + this.iva + this.ice;
+
         this.productoSeleccionado = null;
         PrimeFaces.current().ajax().update("ventaForm:itemsTable");
         System.out.println("Eliminado");
     }
-    
-    
-    
+
+    //Mostrar algun mensaje
+    public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
+        FacesContext.getCurrentInstance().
+                addMessage(null, new FacesMessage(severity, summary, detail));
+    }
+
     //--------------------Getter y Setter-------------------//
     public ClienteVenta getCliente() {
         return cliente;

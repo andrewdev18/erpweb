@@ -124,11 +124,9 @@ public class ProformaManageBean implements Serializable {
             detalle.setDescuento(this.producto.getDescuento());
             detalle.setPrecio(this.precioProducto);
             detalle.setProducto(this.producto);
-            detalle.setSubTotal(this.cantidad * this.precioProducto);
             
             BigDecimal controldecimal = new BigDecimal((this.cantidad * this.precioProducto)).setScale(2, RoundingMode.UP);
-            double tempSubTotal = controldecimal.doubleValue();
-            detalle.setSubTotal(tempSubTotal);
+            detalle.setSubTotal(controldecimal.doubleValue());
             this.subTotalVenta = this.subTotalVenta + controldecimal.doubleValue();
 
             this.listaDetalle.add(detalle);
@@ -160,9 +158,6 @@ public class ProformaManageBean implements Serializable {
         System.out.println("Eliminado");
     }
     
-    public void onRowSelect(SelectEvent event){
-        this.productoSeleccionado = ((DetalleVenta) event.getObject());
-    }
 
     //--------------------Getter y Setter-------------------//    
     public void setCliente(ClienteVenta cliente) {
