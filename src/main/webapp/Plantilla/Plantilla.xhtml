@@ -11,7 +11,7 @@
         <h:outputStylesheet name="css/cssLayout.css" />
         <h:outputStylesheet name="css/default.css"/>
         <h:outputStylesheet name="css/panelheaderpf.css"/>
-        
+
         <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' />
     </h:head>
 
@@ -40,30 +40,17 @@
                                     <p:submenu label="Ventas" icon="pi pi-dollar">
                                         <p:menuitem value="Nueva Venta"
                                                     outcome="/Views/Ventas/nuevaVenta.xhtml"/>
-                                        <p:menuitem value="Listado Ventas"
-                                                    outcome="/Views/ListadoCobros.xhtml"/>
+                                        <p:menuitem value="Listado Ventas"/>
                                     </p:submenu>
-                                    
+
                                     <p:submenu label="Proformas" icon="pi pi-dollar">
                                         <p:menuitem value="Nueva Proforma"
                                                     outcome="/Views/Ventas/nuevaProforma.xhtml"/>
-                                        <p:menuitem value="Listado Proformas"
-                                                    outcome="/Views/ListadoCobros.xhtml"/>
+                                        <p:menuitem value="Listado Proformas"/>
                                     </p:submenu>
 
-                                    <p:submenu label="Reportes" icon="pi pi-book">
-                                        <p:menuitem value="Listado de Clientes con/sin deuda"/>
-                                        <p:menuitem value="Pendientes de Cobro"/>
-                                        <p:menuitem value="Estado de Cuenta" 
-                                                    outcome="/Views/EstadoDeCuenta.xhtml"/>
-                                        <p:menuitem value="Facturas Pendientes" 
-                                                    outcome="/Views/FacturasPendientes.xhtml"/>
-                                        <p:menuitem value="Documentos de Cliente"/>
-                                        <p:menuitem value="Cartera x Edades de Vencimiento" 
-                                                    outcome="/Views/CarteraxEdadesDeVencimiento.xhtml"/>
-                                    </p:submenu>
                                 </p:submenu>
-                                
+
                                 <p:submenu label="Información Tributaria" expanded="true">
                                     <p:menuitem value="Generar ATS" />
                                     <p:menuitem value="Declaración IVA" />
