@@ -8,7 +8,7 @@
 
     <body>
 
-        <ui:composition template="./../Plantilla/Plantilla.xhtml">
+        <ui:composition template="../../Plantilla/Plantilla.xhtml">
 
             <ui:define name="content">
                 <h:form id="proformaForm" >
@@ -109,7 +109,7 @@
                 </h:form>
                 
                 <!--Datos de facturacion-->
-                <p:dialog id="FactData" header="Datos de facturacion" widgetVar="NewSale"
+                <p:dialog id="FactData" header="Datos de facturacion de la proforma" widgetVar="NewSale"
                           height="100%" width="70%" showEffect="fade">
                     <h:form>
                         <p:panel header="Valor de venta" style="text-align: left; width: 100%; float: right">
@@ -127,7 +127,7 @@
                                 <p:outputLabel value="TOTAL"/>
                                 <p:inputText value="#{ProformaMB.total}" disabled="true"/>
                                 <div/>
-                                <p:commandButton value="Efectuar Pago" type="button" onclick="PF('RealizarPago').show()"/>
+                                <p:commandButton value="Ingresar proforma" type="button" onclick=""/>
                             </h:panelGrid>
                         </p:panel>
                     </h:form >

@@ -73,6 +73,9 @@ public class ProductoDAO {
                 con.cerrarConexion();
             }
         }
+        finally{
+            con.cerrarConexion();
+        }
 
         return null;
     }

@@ -135,19 +135,19 @@ public class ProformaManageBean implements Serializable {
             this.cantidad = 1;
             this.codigoProducto = 0;
             this.nombreProducto = "XXXXXX";
-            this.precioProducto=0;
 
             if (this.producto.getIva() != 0) {
-                this.subtotal12 += this.producto.getPrecioUnitario() * detalle.getCantidad();
+                this.subtotal12 += this.precioProducto * detalle.getCantidad();
             } else {
-                this.subtotal0 += this.producto.getPrecioUnitario() * detalle.getCantidad();
+                this.subtotal0 += this.precioProducto * detalle.getCantidad();
             }
-
-            this.iva = this.iva + this.producto.getIva();
-            this.ice = this.iva + this.producto.getIce();
+            this.subtotal12=Math.round(this.subtotal12*100.0)/100.0;
+            this.subtotal0=Math.round(this.subtotal0*100.0)/100.0;
+            this.iva = Math.round(((this.iva + this.producto.getIva())*detalle.getCantidad())*100.0)/100.0;
+            this.ice = Math.round(((this.ice + this.producto.getIce())*detalle.getCantidad())*100.0)/100.0;
 
             this.total = this.subtotal0 + this.subtotal12 + this.iva + this.ice;
-
+            this.precioProducto=0;
             this.producto = null;
         } else {
             System.out.println("No hay producto seleccionado");
