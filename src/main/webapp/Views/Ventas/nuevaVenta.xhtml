@@ -48,7 +48,7 @@
                                 <p:outputLabel value="Cantidad: "/>
                                 <p:inputNumber value="#{VentaMB.cantidad}" modifyValueOnWheel="true" />
                                 <div/>
-                                <p:commandButton value="Agregar" actionListener="#{VentaMB.AgregarProductoLista}" update="itemsTable busquedaProductoPanel FactData growl" />
+                                <p:commandButton value="Agregar" actionListener="#{VentaMB.AgregarProductoLista}" update="itemsTable busquedaProductoPanel FactData Pagos growl" />
                             </h:panelGrid>
                         </p:panel>
                     </div>
@@ -64,7 +64,8 @@
                         </f:facet>
 
                         <p:column headerText="Eliminar" >
-                            <p:commandButton icon="pi pi-trash" styleClass="ui-button-danger" process="@this" actionListener="#{VentaMB.EliminarProducto(ListaItems)}" update="subtotalVenta" />
+                            <p:commandButton icon="pi pi-trash" styleClass="ui-button-danger" process="@this" actionListener="#{VentaMB.EliminarProducto(ListaItems)}" 
+                                             update="subtotalVenta FactData Pagos" />
                         </p:column>
 
                         <p:column headerText="Cod">
@@ -99,10 +100,10 @@
                             </h:outputText>
                         </p:column>
 
-                        <p:columnGroup type="footer">
-                            <p:row>
+                        <p:columnGroup type="footer" id="colgrp">
+                            <p:row id="rowfoot">
                                 <p:column colspan="6" style="text-align:right" footerText="Total:"/>
-                                <p:column style="text-align:left" footerText="#{VentaMB.subTotalVenta}" id="subtotalVenta" ></p:column>
+                                <p:column style="text-align:left" footerText="#{VentaMB.subTotalVenta}" id="subtotalVenta" />
                             </p:row>
                         </p:columnGroup>
                     </p:dataTable>
@@ -130,7 +131,7 @@
                                 <p:outputLabel value="TOTAL"/>
                                 <p:inputText value="#{VentaMB.total}" disabled="true"/>
                                 <div/>
-                                <p:commandButton value="Efectuar Pago" type="button" onclick="PF('RealizarPago').show()"/>
+                                <p:commandButton value="Efectuar Pago" update="Pagos" type="button" onclick="PF('RealizarPago').show()"/>
                             </h:panelGrid>
                         </p:panel>
                     </h:form >
@@ -138,12 +139,12 @@
 
 
                 <p:dialog header="Metodo de pago" widgetVar="RealizarPago"
-                          minHeight="600" width="70%" showEffect="fade">
+                          minHeight="600" width="70%" showEffect="fade" id="Pagos">
                     <h:form>
                         <p:panel class="card">
                             <h:panelGrid columns="2">
                                 <p:outputLabel value="Total a pagar: "/>
-                                <p:inputText value="00.00" disabled="true"/>
+                                <p:inputText value="#{VentaMB.total}" disabled="true"/>
                             </h:panelGrid>
                         </p:panel>
                         <p:accordionPanel>
@@ -169,7 +170,7 @@
                                 </h:panelGrid>
                             </p:tab>
                         </p:accordionPanel>
-                        <p:commandButton value="Pagar" style="margin-top: 20px"/>
+                        <p:commandButton value="Pagar" actionListener="#{VentaMB.RegistrarVenta}" style="margin-top: 20px"/>
                     </h:form>
                 </p:dialog>
             </ui:define>

@@ -69,7 +69,7 @@ public class VentaManagedBean implements Serializable {
         this.producto = new Producto();
         this.productoDao = new ProductoDAO();
         this.codigoProducto = 0;
-        this.nombreProducto = "XXXXXXX";
+        this.nombreProducto = "XXXXXX";
         this.subTotalVenta = 0;
 
         this.subtotal12 = 0;
@@ -86,6 +86,7 @@ public class VentaManagedBean implements Serializable {
     }
 
     //Buscar cliente
+    @Asynchronous
     public void BuscarClienteVenta() {
         this.cliente = clienteDAO.BuscarCliente(this.clienteIdNum);
         if (this.cliente != null) {
@@ -111,88 +112,111 @@ public class VentaManagedBean implements Serializable {
 
         this.producto = this.productoDao.ObtenerProducto(this.codigoProducto);
 
-        System.out.print(this.producto.getDescripcion());
         if (this.producto.getDescripcion() == null || this.producto.getDescripcion() == "") {
-            System.out.print("Producto nulo");
+            System.out.println("Producto nulo");
             addMessage(FacesMessage.SEVERITY_ERROR, "El producto no existe", "Message Content");
         } else {
-            System.out.print("Existe el producto" + this.nombreProducto);
+            System.out.println("Existe el producto" + this.nombreProducto);
             this.nombreProducto = this.producto.getDescripcion();
-            this.precioProducto = this.producto.getPrecioUnitario();
+            this.precioProducto = new BigDecimal(this.producto.getPrecioUnitario()).setScale(2, RoundingMode.UP).floatValue();
         }
     }
 
     //Agregar producto a la lista de detalle
+    @Asynchronous
     public void AgregarProductoLista() {
-        if (this.producto.getCodigo() > 0) {
-            DetalleVenta detalle = new DetalleVenta();
-            detalle.setCodprincipal(this.producto.getCodigo());
-            detalle.setCantidad(this.cantidad);
-            detalle.setDescuento(this.producto.getDescuento());
-            detalle.setPrecio(this.producto.getPrecioUnitario());
-            detalle.setProducto(this.producto);
+        try {
+            if (this.producto.getCodigo() > 0) {
+                DetalleVenta detalle = new DetalleVenta();
+                detalle.setCodprincipal(this.producto.getCodigo());
+                detalle.setCantidad(this.cantidad);
+                detalle.setDescuento(this.producto.getDescuento());
+                detalle.setPrecio(new BigDecimal(this.producto.getPrecioUnitario()).setScale(2, RoundingMode.UP).doubleValue());
+                detalle.setProducto(this.producto);
 
-            BigDecimal controldecimal = new BigDecimal((this.cantidad * this.precioProducto)).setScale(2, RoundingMode.UP);
-            double tempSubTotal = controldecimal.doubleValue();
-            detalle.setSubTotal(tempSubTotal);
+                detalle.setSubTotal(new BigDecimal(this.producto.getPrecioUnitario() * this.cantidad).setScale(2, RoundingMode.UP).doubleValue());
 
-            this.subTotalVenta = this.subTotalVenta + controldecimal.doubleValue();
+                this.subTotalVenta = this.subTotalVenta + detalle.getSubTotal();
+                this.listaDetalle.add(detalle);
+                this.cantidad = 1;
+                this.codigoProducto = 0;
+                this.nombreProducto = "";
 
-            this.listaDetalle.add(detalle);
-            this.cantidad = 1;
-            this.codigoProducto = 0;
-            this.nombreProducto = "";
+                double subtemp = new BigDecimal(this.producto.getPrecioUnitario() * detalle.getCantidad()).setScale(2, RoundingMode.UP).doubleValue();
+                if (this.producto.getIva() != 0) {
+                    this.subtotal12 += subtemp;
+                } else {
+                    this.subtotal0 += subtemp;
+                }
 
-            if (this.producto.getIva() != 0) {
-                this.subtotal12 += this.producto.getPrecioUnitario() * detalle.getCantidad();
+                this.iva += new BigDecimal(this.producto.getIva() * detalle.getCantidad() * detalle.getPrecio()).setScale(2, RoundingMode.UP).doubleValue();
+                this.ice += new BigDecimal(this.producto.getIce() * detalle.getCantidad()).setScale(2, RoundingMode.UP).doubleValue();
+
+                this.total = this.subtotal0 + this.subtotal12 + this.iva + this.ice;
+
+                this.nombreProducto = "XXXXXX";
+                this.cantidad = 1;
+                this.precioProducto = 0;
+
+                this.producto = null;
             } else {
-                this.subtotal0 += this.producto.getPrecioUnitario() * detalle.getCantidad();
+                System.out.println("No hay producto seleccionado");
             }
-
-            this.iva = this.iva + this.producto.getIva();
-            this.ice = this.iva + this.producto.getIce();
-
-            this.total = this.subtotal0 + this.subtotal12 + this.iva + this.ice;
-
-            this.nombreProducto = "XXXXXX";
-            this.cantidad = 1;
-            this.precioProducto = 0;
-
-            this.producto = null;
-        } else {
-            System.out.println("No hay producto seleccionado");
+        } catch (Exception e) {
+            addMessage(FacesMessage.SEVERITY_ERROR, e.getMessage().toString(), "Message Content");
         }
+
     }
 
     //Eliminar un producto de la lista
+    @Asynchronous
     public void EliminarProducto(DetalleVenta detalle) {
-        this.listaDetalle.remove(detalle);
+        try {
+            double subtemp = new BigDecimal(detalle.getProducto().getPrecioUnitario() * detalle.getCantidad()).setScale(2, RoundingMode.UP).doubleValue();
+            if (detalle.getProducto().getIva() != 0) {
+                this.subtotal12 -= subtemp;
+            } else {
+                this.subtotal0 -= subtemp;
+            }
 
-        BigDecimal precioRedondeado = new BigDecimal((detalle.getProducto().getPrecioUnitario())).setScale(2, RoundingMode.UP);
-        BigDecimal cantidadRedondeada = new BigDecimal((detalle.getCantidad())).setScale(2, RoundingMode.UP);
+            this.iva -= new BigDecimal(detalle.getProducto().getIva() * detalle.getCantidad() * detalle.getPrecio()).setScale(2, RoundingMode.UP).doubleValue();
+            this.ice -= new BigDecimal(detalle.getProducto().getIce() * detalle.getCantidad()).setScale(2, RoundingMode.UP).doubleValue();
 
-        this.subTotalVenta -= precioRedondeado.doubleValue() * cantidadRedondeada.doubleValue();
+            this.total = this.subtotal0 + this.subtotal12 + this.iva + this.ice;
+            this.subTotalVenta -= detalle.getSubTotal();
 
-        if (detalle.getProducto().getIva() != 0) {
-            this.subtotal12 -= precioRedondeado.doubleValue() * cantidadRedondeada.doubleValue();
-        } else {
-            this.subtotal0 -= precioRedondeado.doubleValue() * cantidadRedondeada.doubleValue();
+            this.listaDetalle.remove(detalle);
+
+            PrimeFaces.current().ajax().update("ventaForm");
+            System.out.println("Eliminado");
+        } catch (Exception e) {
+            addMessage(FacesMessage.SEVERITY_ERROR, e.getMessage().toString(), "Message Content");
         }
-
-        this.iva -= detalle.getProducto().getIva() * cantidadRedondeada.doubleValue();
-        this.ice -= detalle.getProducto().getIce() * cantidadRedondeada.doubleValue();
-
-        this.total = this.subtotal0 + this.subtotal12 + this.iva + this.ice;
-
-        this.productoSeleccionado = null;
-        PrimeFaces.current().ajax().update("ventaForm:itemsTable");
-        System.out.println("Eliminado");
     }
 
     //Mostrar algun mensaje
+    @Asynchronous
     public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
         FacesContext.getCurrentInstance().
                 addMessage(null, new FacesMessage(severity, summary, detail));
+    }
+
+    @Asynchronous
+    public void RegistrarVenta() {
+        try {
+            int listSize = 0;
+            if(this.listaDetalle.isEmpty())
+                addMessage(FacesMessage.SEVERITY_ERROR, "No puede  realizar una venta nula", "Message Content");
+            else{
+                System.out.println("Registrando venta . . .");
+                while(listSize < this.listaDetalle.size()){
+                    System.out.println(this.listaDetalle.get(listSize).getProducto().getDescripcion());
+                    listSize += 1;
+                }
+            }
+        } catch (Exception e) {
+            addMessage(FacesMessage.SEVERITY_ERROR, e.getMessage().toString(), "Message Content");
+        }
     }
 
     //--------------------Getter y Setter-------------------//
