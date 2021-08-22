@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="../../Plantilla/Plantilla.xhtml">
+
+            <ui:define name="content">
+                <h:form>
+                    <h1 style="margin-bottom: 20px" >Declaración del IVA</h1>
+                    <p:panel>
+                        <h3>Periodo</h3>
+                        <h:panelGrid columns="4" style="margin-bottom: 30px" cellspacing="10px" >
+                            <p:outputLabel for="year" value="Año" />
+                            <p:selectOneMenu id="year" value="Año" >
+                                <f:selectItem itemLabel="2020" itemValue="0" />
+                                <f:selectItem itemLabel="2021" itemValue="1" />
+                            </p:selectOneMenu>
+
+                            <p:outputLabel for="month" value="Mes" />
+                            <p:selectOneMenu id="month" value="Seleccione" >
+                                <f:selectItem itemLabel="Enero" itemValue="0" />
+                                <f:selectItem itemLabel="Febrero" itemValue="1" />
+                                <f:selectItem itemLabel="Marzo" itemValue="2" />
+                                <f:selectItem itemLabel="Abril" itemValue="3" />
+                                <f:selectItem itemLabel="Mayo" itemValue="4" />
+                                <f:selectItem itemLabel="Junio" itemValue="5" />
+                                <f:selectItem itemLabel="Julio" itemValue="6" />
+                                <f:selectItem itemLabel="Agosto" itemValue="7" />
+                                <f:selectItem itemLabel="Septiembre" itemValue="8" />
+                                <f:selectItem itemLabel="Octubre" itemValue="9" />
+                                <f:selectItem itemLabel="Noviembre" itemValue="10" />
+                                <f:selectItem itemLabel="Diciembre" itemValue="11" />
+                            </p:selectOneMenu>
+
+                        </h:panelGrid>
+
+                        <p:commandButton value="SIGUIENTE" style="width: 150px; margin-right: 20px" action="generarIvaCompleto.xhtml" />
+                        <p:commandButton value="SALIR" style="width: 150px" />
+                    </p:panel>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

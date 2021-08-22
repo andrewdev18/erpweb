@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="../../Plantilla/Plantilla.xhtml">
+
+            <ui:define name="content">
+                <h:form>
+                    <h1 style="margin-bottom: 20px" >Declaración del IVA</h1>
+                    
+                    <p:panel>
+                        <p:commandButton value="SIGUIENTE" style="width: 130px; margin-right:20px;" action="generarIvaResumen.xhtml" />
+                            <p:commandButton value="ATRAS" style="width: 130px" action="generarIvaPeriodo.xhtml" />
+                    </p:panel>
+                    
+                    <p:dataTable var="ventas" value="" style="text-align: right" >
+                        <p:column headerText="Resumen de ventas" width="55%" style="text-align: left"  >
+                            <h:outputText value="Ventas Locales tarifa 0%" /> <br/>
+                            <h:outputText value="Ventas Locales tarifa diferente de 0%" /> <br/>
+                        </p:column>
+                        <p:column headerText="COD" width="5%" >
+                            <h:outputText value="401" /> <br/>
+                            <h:outputText value="402" /> <br/>
+                        </p:column>
+                        <p:column headerText="Valor Bruto" width="10%" >
+                            <h:outputText value="1000.00" /> <br/>
+                            <h:outputText value="0.00" /> <br/>
+                        </p:column>
+                        <p:column headerText="COD" width="5%" >
+                            <h:outputText value="411" /> <br/>
+                            <h:outputText value="412" /> <br/>
+                        </p:column>
+                        <p:column headerText="Valor Neto" width="10%" >
+                            <h:outputText value="1000.00" /> <br/>
+                            <h:outputText value="0.00" /> <br/>
+                        </p:column>
+                        <p:column headerText="COD" width="5%" >
+                            <h:outputText value="421" /> <br/>
+                            <h:outputText value="422" /> <br/>
+                        </p:column>
+                        <p:column headerText="Impuesto" width="10%" >
+                            <h:outputText value="0.00" /> <br/>
+                            <h:outputText value="0.00" /> <br/>
+                        </p:column>
+                    </p:dataTable>
+                    
+                    <p:dataTable var="compras" value="" style="text-align: right" >
+                        <p:column headerText="Resumen de compras" width="55%" style="text-align: left"  >
+                            <h:outputText value="Compras Locales tarifa 0%" /> <br/>
+                            <h:outputText value="Compras Locales tarifa diferente de 0%" /> <br/>
+                        </p:column>
+                        <p:column headerText="COD" width="5%" >
+                            <h:outputText value="500" /> <br/>
+                            <h:outputText value="501" /> <br/>
+                        </p:column>
+                        <p:column headerText="Valor Bruto" width="10%" >
+                            <h:outputText value="1000.00" /> <br/>
+                            <h:outputText value="0.00" /> <br/>
+                        </p:column>
+                        <p:column headerText="COD" width="5%" >
+                            <h:outputText value="510" /> <br/>
+                            <h:outputText value="511" /> <br/>
+                        </p:column>
+                        <p:column headerText="Valor Neto" width="10%" >
+                            <h:outputText value="1000.00" /> <br/>
+                            <h:outputText value="0.00" /> <br/>
+                        </p:column>
+                        <p:column headerText="COD" width="5%" >
+                            <h:outputText value="520" /> <br/>
+                            <h:outputText value="421" /> <br/>
+                        </p:column>
+                        <p:column headerText="Impuesto" width="10%" >
+                            <h:outputText value="0.00" /> <br/>
+                            <h:outputText value="0.00" /> <br/>
+                        </p:column>
+                    </p:dataTable>
+                    
+                    <p:dataTable var="divisas" value="" style="text-align: right" >
+                        <p:column headerText="Impuesto a la salida de divisas" width="80%" style="text-align: left"  >
+                            <h:outputText value="Importaciones de materias primas, insumos y bienes de capital que sean incorporadas en procesos productivos de bienes que se exporten" /> <br/>
+                            <h:outputText value="Proporción del ingreso neto de divisas desde el exterior al Ecuador, respecto del total de las exportaciones netas de bienes" /> <br/>
+                        </p:column>
+                        <p:column headerText="COD" width="5%" >
+                            <h:outputText value="700" /> <br/>
+                            <h:outputText value="" /> <br/>
+                        </p:column>
+                        <p:column headerText="Valor" width="10%" >
+                            <h:outputText value="0.00" /> <br/>
+                            <h:outputText value="" /> <br/>
+                        </p:column>
+                        <p:column headerText="COD" width="5%" >
+                            <h:outputText value="701" /> <br/>
+                            <h:outputText value="702" /> <br/>
+                        </p:column>
+                        <p:column headerText="ISD Pagado" width="10%" >
+                            <h:outputText value="0.00" /> <br/>
+                            <h:outputText value="0.00" /> <br/>
+                        </p:column>
+                    </p:dataTable>
+                    
+                    <p:dataTable var="retenciones" value="" style="text-align: right" >
+                        <p:column headerText="Agente de retención al valor agregado" width="85%" style="text-align: left"  >
+                            <h:outputText value="Retención del 10%" /> <br/>
+                            <h:outputText value="Retención del 20%" /> <br/>
+                            <h:outputText value="Retención del 30%" /> <br/>
+                            <h:outputText value="Retención del 50%" /> <br/>
+                            <h:outputText value="Retención del 70%" /> <br/>
+                            <h:outputText value="Retención del 100%" /> <br/>
+                        </p:column>
+                        <p:column headerText="COD" width="5%" >
+                            <h:outputText value="721" /> <br/>
+                            <h:outputText value="723" /> <br/>
+                            <h:outputText value="725" /> <br/>
+                            <h:outputText value="727" /> <br/>
+                            <h:outputText value="729" /> <br/>
+                            <h:outputText value="731" /> <br/>
+                        </p:column>
+                        <p:column headerText="Valor" width="10%" >
+                            <h:outputText value="0.00" /> <br/>
+                            <h:outputText value="0.00" /> <br/>
+                            <h:outputText value="0.00" /> <br/>
+                            <h:outputText value="0.00" /> <br/>
+                            <h:outputText value="0.00" /> <br/>
+                            <h:outputText value="0.00" /> <br/>
+                        </p:column>
+                    </p:dataTable>
+                    
+                    
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
