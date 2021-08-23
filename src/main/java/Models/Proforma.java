@@ -23,6 +23,8 @@ public class Proforma implements Serializable {
     public float base_excento_iva;
     public float iva12;
     public float ice;
+    public float totalproforma;
+    public int detalleproformacodigo;
 
     public Proforma() {
     }
@@ -147,6 +149,21 @@ public class Proforma implements Serializable {
         this.ice = ice;
     }
     
+    public float getTotalproforma() {
+        return totalproforma;
+    }
+
+    public void setTotalproforma(float totalproforma) {
+        this.totalproforma = totalproforma;
+    }
+
+    public int getDetalleproformacodigo() {
+        return detalleproformacodigo;
+    }
+
+    public void setDetalleproformacodigo(int detalleproformacodigo) {
+        this.detalleproformacodigo = detalleproformacodigo;
+    }
     
     
 }

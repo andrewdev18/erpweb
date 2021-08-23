@@ -135,11 +135,12 @@ public class ProformaManageBean implements Serializable {
                 detalle.setCodprincipal(this.producto.getCodigo());
                 detalle.setCantidad(this.cantidad);
                 detalle.setDescuento(this.producto.getDescuento());
-                detalle.setPrecio(new BigDecimal(this.producto.getPrecioUnitario()).setScale(2, RoundingMode.UP).doubleValue());
+                detalle.setPrecio(this.precioProducto);
                 detalle.setProducto(this.producto);
 
-                detalle.setSubTotal(new BigDecimal(this.producto.getPrecioUnitario() * this.cantidad).setScale(2, RoundingMode.UP).doubleValue());
+                detalle.setSubTotal(new BigDecimal(this.precioProducto * this.cantidad).setScale(2, RoundingMode.UP).doubleValue());
 
+                this.producto.setPrecioUnitario(this.precioProducto);
                 this.subTotalVenta = this.subTotalVenta + detalle.getSubTotal();
                 this.listaDetalle.add(detalle);
                 this.cantidad = 1;
@@ -206,7 +207,7 @@ public class ProformaManageBean implements Serializable {
     }
 
     @Asynchronous
-    public void RegistrarVenta() {
+    public void RegistrarProforma() {
         try {
             int listSize = 0;
             if(this.listaDetalle.isEmpty())
