@@ -21,7 +21,7 @@ public class ProformaDAO {
         con = new Conexion();
     }
     
-    public void IngresarProforma(Proforma ProformaDetalle, Producto prod){
+    public void IngresarProforma(Proforma ProformaDetalle){
         String procedimiento;
         int estado;
         con.abrirConexion();
@@ -38,17 +38,6 @@ public class ProformaDAO {
            estado = con.ejecutarProcedimiento(procedimiento);
            if(estado>0){
                System.out.println("Proforma correctamente ingresada");
-               estado=0;
-               procedimiento = "call insertarproductoproforma("+ ProformaDetalle.getDetalleproformacodigo()
-                       +","+ProformaDetalle.getId_proforma()+","+prod.getCodigo()
-                       +","+prod.getStock()+","+prod.getDescuento()+","+prod.getPrecioUnitario()+")";
-               estado = con.ejecutarProcedimiento(procedimiento);
-               if(estado>0){
-                   System.out.println("Detalle de proforma ingresado correctamente");
-               }
-               else{
-                   System.out.println("Problema al ingresar detalle proforma");
-               }
            }
            else{
                System.out.println("Proforma ingresada de manera incorrecta");
@@ -63,5 +52,31 @@ public class ProformaDAO {
         }
     
 }
+    
+    public void ingresarDetalleProforma(Producto prod,Proforma ProformaDetalle){
+        String procedimiento;
+        int estado;
+        con.abrirConexion();
+        try{
+          estado=0;
+               procedimiento = "call insertarproductoproforma("+ ProformaDetalle.getDetalleproformacodigo()
+                       +","+ProformaDetalle.getId_proforma()+","+prod.getCodigo()
+                       +","+prod.getStock()+","+prod.getDescuento()+","+prod.getPrecioUnitario()+")";
+               estado = con.ejecutarProcedimiento(procedimiento);
+               if(estado>0){
+                   System.out.println("Detalle de proforma ingresado correctamente");
+               }
+               else{
+                   System.out.println("Problema al ingresar detalle proforma");
+               }
+        }catch(Exception e){
+            System.out.println(e.toString());
+            if(con.isEstado())
+                con.cerrarConexion();
+        }
+        finally{
+            con.cerrarConexion();
+        }
+    }
     
 }
