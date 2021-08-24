@@ -11,14 +11,17 @@ import javax.inject.Named;
 import DataViews.ClienteVentaDao;
 import DataViews.DetalleVentaDAO;
 import DataViews.ProductoDAO;
+import DataViews.ProformaDAO;
 import Models.ClienteVenta;
 import Models.DetalleVenta;
 import Models.Producto;
+import Models.Proforma;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Formatter;
 import java.util.List;
 import javax.annotation.ManagedBean;
@@ -45,6 +48,8 @@ public class ProformaManageBean implements Serializable {
 
     private DetalleVenta productoSeleccionado;
 
+    private ProformaDAO proformaDAO;
+    private Proforma proforma;
     private ProductoDAO productoDao;
     private Producto producto;
     private int codigoProducto;
@@ -115,7 +120,6 @@ public class ProformaManageBean implements Serializable {
         this.precioProducto = 0;
 
         this.producto = this.productoDao.ObtenerProducto(this.codigoProducto);
-
         if (this.producto.getDescripcion() == null || this.producto.getDescripcion() == "") {
             System.out.println("Producto nulo");
             addMessage(FacesMessage.SEVERITY_ERROR, "El producto no existe", "Message Content");
@@ -211,17 +215,60 @@ public class ProformaManageBean implements Serializable {
         try {
             int listSize = 0;
             if(this.listaDetalle.isEmpty())
-                addMessage(FacesMessage.SEVERITY_ERROR, "No puede  realizar una venta nula", "Message Content");
+                addMessage(FacesMessage.SEVERITY_ERROR, "No puede  realizar una proforma nula", "Message Content");
             else{
-                System.out.println("Registrando venta . . .");
+                System.out.println("Registrando proforma . . .");
+                this.proforma.setId_cliente(Integer.parseInt(this.clienteIdNum));
+                this.proforma.setId_empleado(1);
+                this.proforma.setId_proforma(this.proformaDAO.codigoproforma());
+                this.proforma.setFecha_actualizacion(ObtenerFecha());
+                this.proforma.setFecha_creacion(ObtenerFecha());
+                this.proforma.setFecha_expiracion(ObtenerFecha());
+                this.proforma.setFecha_autorizacion(ObtenerFecha());
+                this.proforma.setProforma_terminada(true);
+                this.proforma.setAceptacion_cliente(true);
+                this.proforma.setEstado("Pendiente");
+                this.proforma.setBase12((float) this.subtotal12);
+                this.proforma.setBase0((float) this.subtotal0);
+                this.proforma.setBase_excento_iva(0);
+                this.proforma.setIva12((float) this.iva);
+                this.proforma.setIce((float) this.ice);
+                this.proforma.setTotalproforma((float) this.total);
+                this.proformaDAO.IngresarProforma(this.proforma);
+                System.out.println("Proforma Registrada");
                 while(listSize < this.listaDetalle.size()){
-                    System.out.println(this.listaDetalle.get(listSize).getProducto().getDescripcion());
+                    DetalleVenta temp=new DetalleVenta();
+                    temp=this.listaDetalle.get(listSize);
+                    this.proformaDAO.ingresarDetalleProforma(temp, this.proforma);
+                    System.out.println("Detalle Proforma ingresada");
                     listSize += 1;
                 }
             }
         } catch (Exception e) {
             addMessage(FacesMessage.SEVERITY_ERROR, e.getMessage().toString(), "Message Content");
         }
+    }
+    
+    @Asynchronous
+    public String ObtenerFecha(){
+        String fecha ="";
+        String dia;
+        String mes;
+        Calendar c1 = Calendar.getInstance();
+        if(Integer.parseInt(Integer.toString(c1.get(Calendar.DATE)))<10){
+            dia="0"+Integer.toString(c1.get(Calendar.DATE)).toString();    
+        }
+        else{
+            dia=Integer.toString(c1.get(Calendar.DATE)).toString();
+        }
+        if(Integer.parseInt(Integer.toString(c1.get(Calendar.MONTH)))<10){
+            mes="0"+Integer.toString(c1.get(Calendar.MONTH)).toString();    
+        }
+        else{
+            mes=Integer.toString(c1.get(Calendar.MONTH)).toString();
+        }
+        fecha= Integer.toString(c1.get(Calendar.YEAR)).toString()+mes+dia;
+        return fecha;
     }
 
     //--------------------Getter y Setter-------------------//

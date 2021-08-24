@@ -7,6 +7,7 @@ package DataViews;
 
 import java.io.Serializable;
 import DataViews.Conexion;
+import Models.DetalleVenta;
 import java.sql.ResultSet;
 import java.util.HashSet;
 import Models.Proforma;
@@ -53,15 +54,15 @@ public class ProformaDAO {
     
 }
     
-    public void ingresarDetalleProforma(Producto prod,Proforma ProformaDetalle){
+    public void ingresarDetalleProforma(DetalleVenta prod,Proforma ProformaDetalle){
         String procedimiento;
         int estado;
         con.abrirConexion();
         try{
           estado=0;
                procedimiento = "call insertarproductoproforma("+ ProformaDetalle.getDetalleproformacodigo()
-                       +","+ProformaDetalle.getId_proforma()+","+prod.getCodigo()
-                       +","+prod.getStock()+","+prod.getDescuento()+","+prod.getPrecioUnitario()+")";
+                       +","+ProformaDetalle.getId_proforma()+","+prod.getCodprincipal()
+                       +","+prod.getCantidad()+","+prod.getDescuento()+","+prod.getPrecio()+")";
                estado = con.ejecutarProcedimiento(procedimiento);
                if(estado>0){
                    System.out.println("Detalle de proforma ingresado correctamente");
@@ -76,6 +77,55 @@ public class ProformaDAO {
         }
         finally{
             con.cerrarConexion();
+        }
+    }
+    
+    public int codigoproforma(){
+        int codigo=0;
+        ResultSet rs;
+        try{
+            rs= con.ejecutarConsulta("Select count(idproforma) from proforma");
+            if(rs==null){
+                System.out.println("No hay proformas en la Base de Datos o retorno nulo");
+                codigo=1;
+            }
+            else{
+                codigo=rs.getInt(1);
+                System.out.println("La proforma se ingresara con codigo: "+codigo);
+            }
+        }
+        catch(Exception e){
+             System.out.println(e.toString());
+             codigo=0;
+            if(con.isEstado())
+                con.cerrarConexion();
+        }
+        finally{
+            return codigo;
+        }
+    }
+    public int codigodetalleproforma(){
+        int codigo=0;
+        ResultSet rs;
+        try{
+            rs= con.ejecutarConsulta("Select count(iddetalleproforma) from detalleproforma");
+            if(rs==null){
+                System.out.println("No hay proformas en la Base de Datos o retorno nulo");
+                codigo=1;
+            }
+            else{
+                codigo=rs.getInt(1);
+                System.out.println("La proforma se ingresara con codigo: "+codigo);
+            }
+        }
+        catch(Exception e){
+             System.out.println(e.toString());
+             codigo=0;
+            if(con.isEstado())
+                con.cerrarConexion();
+        }
+        finally{
+            return codigo;
         }
     }
     
