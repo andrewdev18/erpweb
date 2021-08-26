@@ -27,7 +27,7 @@ public class ProformaDAO {
         int estado;
         con.abrirConexion();
         try{
-           procedimiento = "call ingresarproforma("+ ProformaDetalle.getId_proforma()
+           procedimiento = "INSERT INTO public.proforma(idproforma, idcliente, id_empleado, fechacreacion, fechaactualizacion, fechaexpiracion, proformaterminada, aceptacioncliente, estado, fechaautorizacion, base12, base0, baseexcentoiva, iva12, ice, totalproforma)VALUES("+ ProformaDetalle.getId_proforma()
                    +","+ ProformaDetalle.getId_cliente() +","+ ProformaDetalle.getId_empleado()
                    +",'"+ ProformaDetalle.getFecha_creacion() +"','"+ ProformaDetalle.getFecha_actualizacion()
                    +"','"+ ProformaDetalle.getFecha_expiracion() +"',"+ ProformaDetalle.isProforma_terminada()
@@ -36,13 +36,9 @@ public class ProformaDAO {
                    +","+ ProformaDetalle.getBase0() +","+ ProformaDetalle.getBase_excento_iva()
                    +","+ ProformaDetalle.getIva12() +","+ ProformaDetalle.getIce()
                    +","+ ProformaDetalle.getTotalproforma() +")";
-           estado = con.ejecutarProcedimiento(procedimiento);
-           if(estado>0){
+           con.ejecutarConsulta(procedimiento);
                System.out.println("Proforma correctamente ingresada");
-           }
-           else{
-               System.out.println("Proforma ingresada de manera incorrecta");
-           }
+           
         }catch(Exception e){
             System.out.println(e.toString());
             if(con.isEstado())
@@ -81,27 +77,25 @@ public class ProformaDAO {
     }
     
     public int codigoproforma(){
-        int codigo=0;
-        ResultSet rs;
+        ResultSet rs = null;
+        int idVenta = 1;
+        Proforma proformaactual = new Proforma();
         try{
-            rs= con.ejecutarConsulta("Select count(idproforma) from proforma");
-            if(rs==null){
-                System.out.println("No hay proformas en la Base de Datos o retorno nulo");
-                codigo=1;
+            this.con.abrirConexion();
+            rs = this.con.ejecutarConsulta("select * from public.proforma order by idproforma desc limit 1");
+            while (rs.next()) {
+                idVenta = rs.getInt(1) + 1;
             }
-            else{
-                codigo=rs.getInt(1);
-                System.out.println("La proforma se ingresara con codigo: "+codigo);
-            }
+            return idVenta;
         }
         catch(Exception e){
              System.out.println(e.toString());
-             codigo=0;
-            if(con.isEstado())
+             if(con.isEstado())
                 con.cerrarConexion();
         }
         finally{
-            return codigo;
+            con.cerrarConexion();
+            return idVenta;
         }
     }
     public int codigodetalleproforma(){

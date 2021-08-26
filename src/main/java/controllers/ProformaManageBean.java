@@ -71,7 +71,7 @@ public class ProformaManageBean implements Serializable {
 
     //Constructor
     @PostConstruct
-    public void VentaManagedBean() {
+    public void ProformaManagedBean() {
         this.cliente = new ClienteVenta();
         this.clienteDAO = new ClienteVentaDao();
 
@@ -214,32 +214,47 @@ public class ProformaManageBean implements Serializable {
     public void RegistrarProforma() {
         try {
             int listSize = 0;
+            int codigo=0;
+            boolean estado=true;
+            Proforma profor = new Proforma();
+            ProformaDAO profordao = new ProformaDAO();
+            DetalleVenta temp=new DetalleVenta();
             if(this.listaDetalle.isEmpty())
                 addMessage(FacesMessage.SEVERITY_ERROR, "No puede  realizar una proforma nula", "Message Content");
             else{
                 System.out.println("Registrando proforma . . .");
-                this.proforma.setId_cliente(Integer.parseInt(this.clienteIdNum));
-                this.proforma.setId_empleado(1);
-                this.proforma.setId_proforma(this.proformaDAO.codigoproforma());
-                this.proforma.setFecha_actualizacion(ObtenerFecha());
-                this.proforma.setFecha_creacion(ObtenerFecha());
-                this.proforma.setFecha_expiracion(ObtenerFecha());
-                this.proforma.setFecha_autorizacion(ObtenerFecha());
-                this.proforma.setProforma_terminada(true);
-                this.proforma.setAceptacion_cliente(true);
-                this.proforma.setEstado("Pendiente");
-                this.proforma.setBase12((float) this.subtotal12);
-                this.proforma.setBase0((float) this.subtotal0);
-                this.proforma.setBase_excento_iva(0);
-                this.proforma.setIva12((float) this.iva);
-                this.proforma.setIce((float) this.ice);
-                this.proforma.setTotalproforma((float) this.total);
-                this.proformaDAO.IngresarProforma(this.proforma);
+                profor.setId_cliente(this.cliente.getIdCliente());
+                System.out.println("Proforma registrada con cliente:"+ this.cliente.getIdCliente());
+                profor.setId_empleado(1);
+                System.out.println("Proforma registrada con empleado 1");
+                codigo=profordao.codigoproforma();
+                profor.setId_proforma(codigo);
+                System.out.println("Proforma registrada con codigo:"+ profor.getId_proforma());
+                profor.setFecha_actualizacion(ObtenerFecha());
+                System.out.println("Proforma registrada con fecha:"+ ObtenerFecha());
+                profor.setFecha_creacion(ObtenerFecha());
+                System.out.println("Proforma registrada con fecha:"+ ObtenerFecha());
+                profor.setFecha_expiracion(ObtenerFecha());
+                System.out.println("Proforma registrada con fecha:"+ ObtenerFecha());
+                profor.setFecha_autorizacion(ObtenerFecha());
+                System.out.println("Proforma registrada con fecha:"+ ObtenerFecha());
+                profor.setProforma_terminada(estado);
+                System.out.println("Proforma registrada con estado:"+ estado);
+                profor.setAceptacion_cliente(estado);
+                System.out.println("Proforma registrada con estado:"+ estado);
+                profor.setEstado("Pendiente");
+                System.out.println("Proforma registrada con estado pendiente");
+                profor.setBase12((float) this.subtotal12);
+                profor.setBase0((float) this.subtotal0);
+                profor.setBase_excento_iva(0);
+                profor.setIva12((float) this.iva);
+                profor.setIce((float) this.ice);
+                profor.setTotalproforma((float) this.total);
+                profordao.IngresarProforma(profor);
                 System.out.println("Proforma Registrada");
                 while(listSize < this.listaDetalle.size()){
-                    DetalleVenta temp=new DetalleVenta();
                     temp=this.listaDetalle.get(listSize);
-                    this.proformaDAO.ingresarDetalleProforma(temp, this.proforma);
+                    this.proformaDAO.ingresarDetalleProforma(temp, profor);
                     System.out.println("Detalle Proforma ingresada");
                     listSize += 1;
                 }
@@ -262,12 +277,12 @@ public class ProformaManageBean implements Serializable {
             dia=Integer.toString(c1.get(Calendar.DATE)).toString();
         }
         if(Integer.parseInt(Integer.toString(c1.get(Calendar.MONTH)))<10){
-            mes="0"+Integer.toString(c1.get(Calendar.MONTH)).toString();    
+            mes="0"+Integer.toString(c1.get(Calendar.MONTH)+1 ).toString();    
         }
         else{
             mes=Integer.toString(c1.get(Calendar.MONTH)).toString();
         }
-        fecha= Integer.toString(c1.get(Calendar.YEAR)).toString()+mes+dia;
+        fecha= Integer.toString(c1.get(Calendar.YEAR)).toString()+"/"+mes+"/"+dia;
         return fecha;
     }
 
